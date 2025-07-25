@@ -1,0 +1,121 @@
+
+    /* ======= STYLE UMUM ======= */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+    }
+
+    header {
+      background-color: rgb(20, 22, 24);
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      position: relative;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* ======= TOMBOL LOGIN DI KANAN ATAS ======= */
+    .top-login-buttons {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+    }
+
+    .top-login-buttons .btn {
+      margin-left: 10px;
+      background-color: #388e3c;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 13px;
+    }
+
+    .top-login-buttons .btn:hover {
+      background-color: #388e3c;
+      transform: scale(1.05);
+    }
+
+    /* ======= KONTEN UTAMA ======= */
+    main {
+      padding: 40px;
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+    }
+
+    .highlight-box {
+      background: linear-gradient(to right, #00695c, #388e3c);
+      color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      margin: 40px 0;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .highlight-box h2 {
+      font-size: 30px;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .highlight-box p {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      border-bottom: 2px solid #388e3c;
+      padding-bottom: 10px;
+      font-size: 22px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #388e3c;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #2e7d32;
+    }
+
+    /* ======= FOOTER ======= */
+    footer {
+      background: #333;
+      color: #ddd;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* ======= RESPONSIVE UNTUK MOBILE ======= */
+    @media (max-width: 768px) {
+      .top-login-buttons {
+        position: static;
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
+

@@ -1,0 +1,215 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+/* ========== HEADER ========== */
+.header {
+  background: linear-gradient(to right, #2c3e50, #34495e);
+  color: #fff;
+  padding: 15px;
+  padding-left: 175px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.header-right {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-left {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.back-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #388e3c;
+}
+
+.akun-text {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.akun-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.akun-button:hover {
+  background-color: #388e3c;
+}
+
+/* ========== LAYOUT ========== */
+.layout {
+  display: flex;
+  min-height: calc(100vh - 60px);
+  background-color: #f0f0f0;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: 180px;
+  background-color: #d5d5d5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  border-right: 1px solid #ddd;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+}
+
+.menu {
+  width: 140px;
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  margin: 10px 0;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.menu:hover {
+  background: #388e3c;
+  transform: scale(1.05);
+}
+
+.submenu {
+  display: none;
+  flex-direction: column;
+  width: 140px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.submenu button {
+  background: #66bb6a;
+  margin: 5px 0;
+  font-size: 12px;
+  padding: 8px;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+  flex: 1;
+  background-image: url('/asset/bg3.jpg'); /* ✅ Digunakan di CSS eksternal */
+  background-size: cover;
+  background-position: center;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  text-align: center;
+  text-shadow: 2px 2px 5px #000;
+  padding: 30px;
+  backdrop-filter: brightness(0.85);
+  background-blend-mode: overlay;
+}
+
+.main-content h1 {
+  margin: 0;
+  font-size: 26px;
+  line-height: 1.5;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.main-content p {
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  background: #333;
+  color: white;
+  padding: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+}
+
+.footer .info,
+.footer .maps {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.footer .info p {
+  margin: 6px 0;
+}
+
+.footer iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
+  border-radius: 10px;
+}
+
+/* Ikon dan panah */
+.arrow {
+  float: right;
+}
+
+.icon {
+  margin-right: 8px;
+}
+
+/* Animasi FadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

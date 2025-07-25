@@ -1,0 +1,148 @@
+/* Reset margin & padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Styling dasar HTML dan body */
+html, body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+/* Header utama */
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 15px 30px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Layout utama: sidebar + konten */
+.layout {
+  display: flex;
+  min-height: calc(100vh - 60px);
+}
+
+/* Sidebar menu kiri */
+.sidebar {
+  width: 180px;
+  background-color: #d5d5d5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+  border-right: 1px solid #ccc;
+}
+
+/* Tombol menu di sidebar */
+.menu {
+  width: 140px;
+  background: #4CAF50;
+  color: #fff;
+  border: none;
+  margin: 10px 0;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Efek hover tombol */
+.menu:hover {
+  background: #388e3c;
+  transform: scale(1.05);
+}
+
+/* Konten utama */
+.main-content {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Hero donasi */
+.donasi-hero {
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+    url('/asset/bg3.jpg'); /* ✅ Digunakan jika ini di file CSS biasa */
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  padding: 50px 20px;
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  opacity: 0; /* Siap untuk animasi fade-in */
+}
+
+/* Judul di hero donasi */
+.donasi-hero h1 {
+  font-size: 34px;
+  margin-bottom: 15px;
+}
+
+/* Box QR donasi */
+.qr-box {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.08);
+  padding: 30px;
+  max-width: 500px;
+  margin: 0 auto 40px;
+  text-align: center;
+  opacity: 0; /* Siap untuk animasi fade-in */
+}
+
+/* Gambar QR */
+.qr-box img {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* Keterangan QR */
+.qr-box p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Tabel donatur */
+.tabel-donatur {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+/* Tabel umum */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Bagian header tabel */
+table thead {
+  background: #4CAF50;
+  color: white;
+}
+
+/* Sel tabel */
+table th, table td {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+/* Baris genap tabel */
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

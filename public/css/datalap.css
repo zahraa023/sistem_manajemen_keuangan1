@@ -1,0 +1,286 @@
+/* ========== RESET ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== BODY ========== */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 20px;
+}
+
+/* ========== CONTAINER UTAMA ========== */
+.container {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* ========== HEADER MASJID ========== */
+.header {
+  background-color: rgb(20, 22, 24);
+  color: white;
+  padding: 18px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+
+/* ========== TOMBOL BACK ========== */
+.back-button {
+  margin: 15px 0 25px 40px;
+}
+
+.back-link {
+  display: inline-block;
+  color: #12735d;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.back-link i {
+  margin-right: 8px;
+}
+
+.back-link:hover {
+  color: #0a4d3f;
+  transform: translateX(-2px);
+}
+
+.circle-back-wrapper {
+  padding-left: 40px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.circle-back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #12735d;
+  color: #fff;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 18px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.circle-back-button:hover {
+  background-color: #0a4d3f;
+  transform: translateX(-3px);
+}
+
+/* ========== JUDUL LAPORAN ========== */
+.page-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+/* ========== KARTU RINGKASAN ========== */
+.summary-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  flex: 1;
+  min-width: 220px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  position: relative;
+}
+
+.card h4 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.card small {
+  color: #777;
+  font-size: 12px;
+}
+
+.amount {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.subamount {
+  font-size: 13px;
+  color: #666;
+}
+
+.card-icon {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.green .amount { color: #388e3c; }
+.red .amount { color: #d32f2f; }
+.blue .amount { color: #4CAF50; }
+
+.green .card-icon { background: #e8f5e9; color: #388e3c; }
+.red .card-icon { background: #fdecea; color: #d32f2f; }
+.blue .card-icon { background: #e3f2fd; color: #4CAF50; }
+
+/* ========== FILTER BULAN / TOMBOL TAB ========== */
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #ecf0f1;
+  color: #2c3e50;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.active-tab {
+  background: #12735d !important;
+  color: white !important;
+}
+
+/* ========== TAB NAVIGATION ========== */
+.tabs {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #1e1e1e;
+  border-bottom: 3px solid transparent;
+  padding-bottom: 6px;
+  margin-right: 20px;
+  transition: border-color 0.2s ease;
+}
+
+.tab-button.active {
+  color: #12735d;
+  border-bottom: 3px solid #12735d;
+}
+
+/* ========== BOX TRANSAKSI ========== */
+.transactions {
+  max-width: 800px;
+  margin: 30px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.transactions h4 {
+  text-align: left;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transaction-table th,
+.transaction-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  font-size: 14px;
+}
+
+.transaction-table th {
+  background-color: #f0f4f8;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+}
+
+.transaction-table td:nth-child(2),
+.transaction-table td:nth-child(3),
+.transaction-table td:nth-child(4) {
+  text-align: right;
+}
+
+.amount-green {
+  color: green;
+  font-weight: bold;
+}
+
+.amount-red {
+  color: red;
+  font-weight: bold;
+}
+
+.amount-bold {
+  font-weight: bold;
+  color: #222;
+}
+
+.saldo-row td {
+  background-color: #f9fafc;
+  font-size: 15px;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 98vw;
+  background: #333;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ========== IKON TAMBAHAN ========== */
+.arrow {
+  float: right;
+}
+
+.icon {
+  margin-right: 8px;
+}

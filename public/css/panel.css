@@ -1,0 +1,70 @@
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { font-family: Arial, sans-serif; background: #f0f0f0; height: 100%; }
+
+    .header {
+      background: #2c3e50; color: white; padding: 15px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .back-button {
+      background-color: #4CAF50; color: white; border: none;
+      padding: 6px 10px; border-radius: 5px; cursor: pointer; font-size: 16px;
+    }
+
+    .layout {
+      display: flex; min-height: calc(100vh - 60px);
+    }
+
+    .sidebar {
+      width: 200px; background: #2f2f2f; color: white;
+      display: flex; flex-direction: column; padding-top: 20px;
+    }
+
+    .sidebar button {
+      background: none; color: white; border: none;
+      padding: 12px 20px; text-align: left;
+      font-weight: bold; font-size: 14px; cursor: pointer;
+    }
+
+    .sidebar button:hover {
+      background: #4CAF50;
+    }
+
+    .content {
+      flex: 1; padding: 20px; background: white;
+    }
+
+    .section { display: none; }
+    .form-group { margin-bottom: 10px; }
+    .form-group label { display: block; margin-bottom: 5px; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;
+    }
+
+    .form-group input[type="file"] {
+      padding: 3px;
+    }
+
+    .btn {
+      background: #4CAF50; color: white; border: none;
+      padding: 10px 15px; border-radius: 5px; cursor: pointer;
+    }
+
+    .btn:hover { background: #388e3c; }
+
+    table {
+      width: 100%; border-collapse: collapse; margin-top: 20px;
+    }
+
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #4CAF50; color: white;
+    }
+
+    th, td {
+      padding: 10px; text-align: center;
+    }
