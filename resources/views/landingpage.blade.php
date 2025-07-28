@@ -57,7 +57,9 @@
       <p><i class="fas fa-phone icon"></i>0812 6690 970</p>
       <p><i class="fab fa-facebook icon"></i>MuhammadIdrusRamli</p>
     </div>
-      <a href="https://www.google.com/maps?q=PF38%2BC3P%2C+Canduang+Koto+Laweh%2C+Kec.+Candung%2C+Kabupaten+Agam%2C+Sumatera+Barat+26192&output=embed" class="btn" target="_blank">Lihat di Maps</a>
+      <a href="https://www.google.com/maps?q=PF38%2BC3P%2C+Canduang+Koto+Laweh%2C+Kec.+Candung%2C+Kabupaten+Agam%2C+Sumatera+Barat+26192" >
+  📍 Lihat di Google Maps
+</a>
     </div>
   </main>
 

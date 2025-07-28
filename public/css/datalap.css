@@ -202,7 +202,7 @@ body {
 .transactions {
   max-width: 800px;
   margin: 30px auto;
-  background-color: #fff;
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -211,7 +211,7 @@ body {
 .transactions h4 {
   text-align: left;
   margin-bottom: 20px;
-  color: #333;
+  color: #2c3e50;
   font-size: 1.2rem;
 }
 
@@ -222,43 +222,59 @@ body {
 
 .transaction-table th,
 .transaction-table td {
-  border: 1px solid #ddd;
+  border: 1px solid #d6e0e9;
   padding: 12px;
   font-size: 14px;
 }
 
+/* ===== Warna header tabel diganti jadi biru keabuan segar ===== */
 .transaction-table th {
-  background-color: #f0f4f8;
+  background-color: #dbe9f4;
   font-weight: bold;
-  color: #333;
+  color: #1e3d59;
   text-align: left;
 }
 
+/* ===== Warna baris isi lebih soft dan bersih ===== */
+.transaction-table tr:nth-child(even) {
+  background-color: #f5faff;
+}
+
+.transaction-table tr:hover {
+  background-color: #e0f1ff;
+}
+
+/* ===== Penyesuaian rata kanan untuk kolom angka ===== */
 .transaction-table td:nth-child(2),
 .transaction-table td:nth-child(3),
 .transaction-table td:nth-child(4) {
   text-align: right;
 }
 
+/* ===== Warna angka masuk/keluar agar berbeda dari warna biasa ===== */
 .amount-green {
-  color: green;
+  color: #2e7d32;
   font-weight: bold;
 }
 
 .amount-red {
-  color: red;
+  color: #c62828;
   font-weight: bold;
 }
 
 .amount-bold {
   font-weight: bold;
-  color: #222;
+  color: #1a1a1a;
 }
 
+/* ===== Warna saldo total baris bawah agar terlihat seperti ringkasan ===== */
 .saldo-row td {
-  background-color: #f9fafc;
+  background-color: #eaf6ff;
   font-size: 15px;
+  font-weight: bold;
+  color: #004d73;
 }
+
 
 /* ========== FOOTER ========== */
 .footer {

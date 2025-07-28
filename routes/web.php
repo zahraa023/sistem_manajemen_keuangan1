@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JadwalShalatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,12 @@ Route::get('/laporan', function () {
 Route::get('/donasi', function () {
     return view('donasi');
 });
-
+Route::get('/deskripsi', function () {
+    return view('deskripsi');
+});
+Route::get('/zakat', function () {
+    return view('zakat');
+});
 Route::get('/login', function () {
     return view('admin.login'); 
 });

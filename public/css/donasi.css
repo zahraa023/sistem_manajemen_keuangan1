@@ -66,18 +66,15 @@ html, body {
 
 /* Hero donasi */
 .donasi-hero {
-  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-    url('/asset/bg3.jpg'); /* ✅ Digunakan jika ini di file CSS biasa */
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-  padding: 50px 20px;
-  text-align: center;
-  color: white;
-  margin-bottom: 30px;
-  opacity: 0; /* Siap untuk animasi fade-in */
-}
+      background: url('/asset/bg3.jpg') center/cover no-repeat;
+      border-radius: 10px;
+      padding: 50px 20px;
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+      background-size: cover;
+      background-position: center;
+    }
 
 /* Judul di hero donasi */
 .donasi-hero h1 {
@@ -97,19 +94,27 @@ html, body {
   opacity: 0; /* Siap untuk animasi fade-in */
 }
 
-/* Gambar QR */
+/* QR Box (digabung dan dirapikan) */
+.qr-box {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  max-width: 500px;
+  margin: 15px auto;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+}
+.qr-box.show {
+  opacity: 1;
+}
+
+
 .qr-box img {
   width: 200px;
   height: 200px;
   border-radius: 8px;
   border: 1px solid #ccc;
-}
-
-/* Keterangan QR */
-.qr-box p {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #555;
+  margin-bottom: 10px;
 }
 
 /* Tabel donatur */
@@ -145,4 +150,48 @@ table th, table td {
 /* Baris genap tabel */
 table tbody tr:nth-child(even) {
   background-color: #f9f9f9;
+}
+.dropdown-wrapper {
+  width: 140px;
+  position: relative;
+}
+
+.dropdown-toggle {
+  width: 140px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 140px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.submenu {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+}
+
+.submenu:hover {
+  background-color: #eee;
 }

@@ -1,0 +1,296 @@
+/* Reset & Global */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f3f7f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ==================== HEADER ==================== */
+.header {
+  display: flex;
+  align-items: center;
+  background-color: #030303;
+  color: white;
+  padding: 10px 15px;
+  position: relative;
+}
+
+.header-left {
+  flex: 0 0 auto;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.header-center {
+  flex: 1;
+  text-align: center;
+}
+
+.masjid-title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+
+/* Hero Donasi / Hero Section */
+.donasi-hero,
+.hero-section {
+  background: linear-gradient(  #acb5ad), url('/asset/bg3.jpg') center/cover no-repeat;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  padding: 60px 20px;
+  text-align: center;
+  color: white;
+  background-blend-mode: multiply;
+}
+
+.donasi-hero h1,
+.hero-section h1 {
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.donasi-hero p,
+.hero-section p {
+  font-size: 16px;
+}
+
+/* Info Zakat Section */
+.info-zakat {
+  background: #fff;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 25px 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  font-size: 15px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.info-zakat h2 {
+  font-size: 22px;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+.jenis-zakat {
+  background: #ffffff;
+  padding: 30px;
+  margin: 30px auto;
+  border-radius: 12px;
+  max-width: 700px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.jenis-zakat h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.zakat-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.zakat-list li {
+  margin-bottom: 15px;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+/* Form Container */
+.form-container,
+.qr-box {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  max-width: 600px;
+  margin: 30px auto 50px;
+  text-align: center;
+  transition: 0.3s ease-in-out;
+}
+
+.form-container h3 {
+  margin-bottom: 20px;
+  color: #205E3D;
+}
+
+/* Form Input Fields */
+form input[type="text"],
+form input[type="number"],
+form input[type="file"],
+form select {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Upload Label */
+.upload-section label,
+#buktiZakatContainer label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Submit Button */
+form button {
+  background-color: #2e7d32;
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+form button:hover {
+  background-color: #1b5e20;
+  transform: scale(1.03);
+}
+
+form button i {
+  margin-right: 8px;
+}
+
+/* QR Code Section */
+.qr-box img,
+.qr-section img {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin: 15px 0;
+}
+
+.qr-box p {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Animasi Fade In */
+.fade-in {
+  animation: fadeIn 1s ease-in;
+}
+/* Tabel donatur */
+.tabel-donatur {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+/* Tabel umum */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Bagian header tabel */
+table thead {
+  background: #4CAF50;
+  color: white;
+}
+
+/* Sel tabel */
+table th, table td {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+/* Baris genap tabel */
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+.dropdown-wrapper {
+  width: 140px;
+  position: relative;
+}
+
+.dropdown-toggle {
+  width: 140px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 140px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+
+.submenu {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+}
+
+.submenu:hover {
+  background-color: #eee;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .donasi-hero h1,
+  .hero-section h1 {
+    font-size: 26px;
+  }
+
+  .form-container,
+  .qr-box {
+    padding: 20px;
+  }
+}

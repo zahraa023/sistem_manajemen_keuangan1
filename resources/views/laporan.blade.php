@@ -28,7 +28,7 @@
     <!-- KARTU -->
     <div class="summary-cards">
       <div class="card green">
-        <h4>Saldo Awal</h4>
+        <h4>Saldo </h4>
         <small>Kamis, 1 Mei 2025</small>
         <div class="amount">Rp 101,25 jt</div>
         <div class="card-icon"><i class="fas fa-wallet"></i></div>

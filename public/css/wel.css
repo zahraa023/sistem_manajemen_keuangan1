@@ -13,7 +13,7 @@ html, body {
 
 /* ========== HEADER ========== */
 .header {
-  background: linear-gradient(to right, #2c3e50, #34495e);
+  background-color: #333;
   color: #fff;
   padding: 15px;
   padding-left: 175px;

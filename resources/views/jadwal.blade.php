@@ -23,6 +23,7 @@
   <button class="menu" onclick="window.location.href='/jadwal'">Jadwal</button>
   <button class="menu" onclick="window.location.href='/laporan'">Data Keuangan</button>
   <button class="menu" onclick="window.location.href='/donasi'">Donasi</button>
+  <button class="menu" onclick="window.location.href='/zakat'">Zakat</button>
 </div>
 
 

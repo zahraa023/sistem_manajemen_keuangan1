@@ -11,7 +11,8 @@
 
   <div class="header">
     <button class="back-button" onclick="window.location.href='/dashboard'">
-      <i class="fas fa-arrow-left"></i>
+     <i class="fas fa-arrow-left"></i> 
+
     </button>
     <h1>Admin Panel - Masjid Jami' (Surau Gadang)</h1>
   </div>
