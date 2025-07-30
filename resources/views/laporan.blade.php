@@ -15,7 +15,7 @@
 
 <!-- TOMBOL BACK BULAT -->
 <div class="circle-back-wrapper">
-  <a href="/" class="circle-back-button" title="Kembali ke Beranda">
+  <a href="/welcome" class="circle-back-button" title="Kembali ke Beranda">
     <i class="fas fa-arrow-left"></i>
   </a>
 </div>

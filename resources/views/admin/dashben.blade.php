@@ -26,6 +26,7 @@
   <!-- SIDEBAR -->
   <div class="sidebar">
     <button class="active" onclick="showContent('dashben', event)">Dashboard</button>
+    <button class="active" onclick="showContent('donatur', event)">Donatur</button>
     <button class="active" onclick="showContent('Zakat', event)">Zakat</button>
     <button onclick="toggleDropdown()">Laporan ⯆</button>
     <div id="dropdownMenu">

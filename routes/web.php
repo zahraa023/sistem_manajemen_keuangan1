@@ -1,64 +1,47 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthUserController;
 use App\Http\Controllers\JadwalShalatController;
+use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DonasisdController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/jadwal', function () {
-    return view('jadwal');
-});
-
-Route::get('/laporan', function () {
-    return view('laporan');
-});
-
-Route::get('/donasi', function () {
-    return view('donasi');
-});
-Route::get('/deskripsi', function () {
-    return view('deskripsi');
-});
-Route::get('/zakat', function () {
-    return view('zakat');
-});
-Route::get('/login', function () {
-    return view('admin.login'); 
-});
-Route::get('/loginuser', function () {
-    return view('loginuser'); 
-});
-
-Route::get('/dashboard', function () {
-    return view('admin.dashboard');
-});
-Route::get('/dashben', function () {
-    return view('admin.dashben');
-});
-
-Route::get('/landingpage', function () {
     return view('landingpage');
 });
 
-Route::get('/akun', function () {
-    return view('akun');
-});
+// Static Pages
+Route::view('/laporan', 'laporan');
+Route::view('/deskripsi', 'deskripsi');
+Route::view('/zakat', 'zakat');
+Route::view('/login', 'admin.login');
+Route::view('/loginuser', 'loginuser');
+Route::view('/dashboard', 'admin.dashboard');
+Route::view('/dashben', 'admin.dashben');
+Route::view('/donatur', 'admin.donatur');
+Route::view('/welcome', 'welcome');
+Route::view('/akun', 'akun');
+Route::view('/adminpanel', 'admin.adminpanel');
 
-Route::get('/adminpanel', function () {
-    return view('admin.adminpanel');
-});
+// Jadwal Shalat
+Route::get('/jadwal', [JadwalShalatController::class, 'showJadwal']);
+
+// Autentikasi User
+Route::post('/loginuser', [AuthUserController::class, 'login']);
+Route::post('/registeruser', [AuthUserController::class, 'register']);
 
 
+// Donasi
+Route::get('/donasi', [DonasiController::class, 'create']);
+Route::post('/donasi', [DonasiController::class, 'store'])->name('donasi.store');
+Route::get('/donatur', [DashboardController::class, 'donatur'])->name('dashboard.donatur');
+Route::post('/donatur', [DashboardController::class, 'storeDonatur'])->name('dashboard.donatur.store');
+Route::put('/donatur/approve/{id}', [DashboardController::class, 'approve'])->name('donatur.approve');
+Route::delete('/donatur/{id}', [DashboardController::class, 'destroy'])->name('donatur.destroy'); // ✅ tambahkan ini

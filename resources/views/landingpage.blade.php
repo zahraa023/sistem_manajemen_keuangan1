@@ -23,11 +23,15 @@
 
   <main>
   <div class="highlight-box">
-    <h2>Selamat Datang di Website Resmi</h2>
-    <p><strong>Masjid Jami' Surau Gadang</strong><br>
-    Dikenal sebagai "Sidang Sebuah Balai", pusat ibadah, budaya, dan kebersamaan masyarakat Minangkabau.</p>
-    <img src="{{ asset('asset/images.png') }}" alt="Masjid Jami' Surau Gadang" style="max-width:100%; border-radius:10px; margin-bottom:20px;">
-  </div>
+  <h2>Selamat Datang di Website Resmi</h2>
+  <p><strong>Masjid Jami' Surau Gadang</strong><br>
+  Dikenal sebagai "Sidang Sebuah Balai", pusat ibadah, budaya, dan kebersamaan masyarakat Minangkabau.</p>
+  
+  <img src="{{ asset('asset/masjid1.png') }}" 
+       alt="Masjid Jami' Surau Gadang" 
+       style="width: 30%; display: block; margin: 0 auto; border-radius: 10px; margin-bottom: 20px;">
+</div>
+
 
   <div id="about" class="section">
     <h2>Tentang Masjid</h2>

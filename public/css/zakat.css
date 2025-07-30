@@ -49,7 +49,7 @@ body, html {
 /* Hero Donasi / Hero Section */
 .donasi-hero,
 .hero-section {
-  background: linear-gradient(  #acb5ad), url('/asset/bg3.jpg') center/cover no-repeat;
+  background: linear-gradient(  #acb5ad), url('/asset/masjid1.png') center/cover no-repeat;
   border-bottom-left-radius: 50px;
   border-bottom-right-radius: 50px;
   padding: 60px 20px;

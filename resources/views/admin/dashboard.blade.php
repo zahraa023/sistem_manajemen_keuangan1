@@ -16,6 +16,10 @@
       font-weight: bold;
       cursor: pointer;
     }
+    .sidebar button.active {
+      background-color: #4CAF50;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -34,8 +38,8 @@
     <div class="sidebar" style="background-color:#2f2f2f; width:200px; display:flex; flex-direction:column; padding-top:10px;">
       <button class="active" onclick="showContent('dashboard', event)">Dashboard Admin</button>
       <button onclick="window.location.href='/adminpanel'">Admin Panel</button>
-      <button onclick="showContent('nama donatur', event)">Nama Donatur</button>
-      <button onclick="showContent('data user', event)">Data User</button>
+      <button onclick="window.location.href='/donatur'">Donatur</button>
+      <button onclick="showContent('kelompok donasi', event)">Kelompok Donasi</button>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -74,48 +78,12 @@
               <p style="color: #666; margin-top: 3px; font-size: 13px;">Total donatur yang telah berkontribusi</p>
             </div>
           </div>
-        `;
-      } else if (page === 'nama donatur') {
-        main.innerHTML = `
-          <h2>Nama Donatur</h2>
-          <div style="margin-bottom: 10px;">
-            <button class="btn-tambah" onclick="toggleFormDonatur()">+ Tambah Rincian</button>
-            <button class="btn-tambah" onclick="cetakPDFDonatur()">Cetak PDF</button>
-          </div>
-          <table id="donaturTable">
+
+          <h2 style="margin-top: 40px;">Data User</h2>
+          <input type="text" id="searchUser" onkeyup="filterUser()" placeholder="Cari..." style="margin-top: 10px; padding: 8px; width: 100%; max-width: 300px;">
+          <table id="userTable" border="1" cellspacing="0" cellpadding="5" style="width: 100%; margin-top: 10px; border-collapse: collapse;">
             <thead>
-              <tr>
-                <th>#</th>
-                <th>Nama Donatur</th>
-                <th>Nominal</th>
-                <th>Waktu Donasi</th>
-                <th>Aksi</th>
-              </tr>
-            </thead>
-            <tbody id="bodyDonatur">
-              <tr>
-                <td>1</td>
-                <td>Hamba Allah</td>
-                <td>100000</td>
-                <td>2025-07-13</td>
-                <td><button onclick="hapusBaris(this)">🗑️</button></td>
-              </tr>
-            </tbody>
-          </table>
-          <div id="formDonatur" class="form-section" style="display: none; margin-top: 10px;">
-            <input type="text" id="donaturNama" placeholder="Nama Donatur">
-            <input type="text" id="donaturNominal" placeholder="Nominal">
-            <input type="date" id="donaturWaktu">
-            <button class="btn-white" onclick="simpanDonatur()">Simpan</button>
-          </div>
-        `;
-      } else if (page === 'data user') {
-        main.innerHTML = `
-          <h2>Data User</h2>
-          <input type="text" id="searchUser" onkeyup="filterUser()" placeholder="Cari...">
-          <table id="userTable">
-            <thead>
-              <tr>
+              <tr style="background-color: #f0f0f0;">
                 <th>No</th>
                 <th>Nama User</th>
                 <th>Email</th>
@@ -144,8 +112,12 @@
           `;
           tbody.appendChild(row);
         });
-      } else {
-        main.innerHTML = `<h2>${page.toUpperCase()}</h2><p>Konten halaman ${page} ditampilkan di sini.</p>`;
+
+      } else if (page === 'kelompok donasi') {
+        main.innerHTML = `
+          <h2>Kelompok Donasi</h2>
+          <p>Konten tentang kelompok donasi akan ditampilkan di sini.</p>
+        `;
       }
     }
 
@@ -160,57 +132,10 @@
       });
     }
 
-    function hapusBaris(button) {
-      button.closest('tr').remove();
-    }
-
-    function toggleFormDonatur() {
-      const form = document.getElementById('formDonatur');
-      form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function simpanDonatur() {
-      const nama = document.getElementById('donaturNama').value;
-      const nominal = document.getElementById('donaturNominal').value;
-      const waktu = document.getElementById('donaturWaktu').value;
-
-      if (!nama || !nominal || !waktu) {
-        alert('Isi semua kolom!');
-        return;
-      }
-
-      const tbody = document.getElementById('bodyDonatur');
-      const rowCount = tbody.rows.length;
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${rowCount + 1}</td>
-        <td>${nama}</td>
-        <td>${nominal}</td>
-        <td>${waktu}</td>
-        <td><button onclick="hapusBaris(this)">🗑️</button></td>
-      `;
-      tbody.appendChild(row);
-
-      document.getElementById('donaturNama').value = '';
-      document.getElementById('donaturNominal').value = '';
-      document.getElementById('donaturWaktu').value = '';
-      toggleFormDonatur();
-    }
-
-    function cetakPDFDonatur() {
-      html2canvas(document.getElementById('donaturTable')).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('donatur.pdf');
-      });
-    }
-
     window.onload = function () {
       showContent('dashboard');
     };
   </script>
+
 </body>
 </html>

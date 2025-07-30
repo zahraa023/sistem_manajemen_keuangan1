@@ -12,7 +12,7 @@
 <!-- ========== HEADER ========== -->
   <div class="header">
     <div class="header-left">
-      <button class="back-button" onclick="window.location.href='/donasi'">
+      <button class="back-button" onclick="window.location.href='/welcome'">
         <i class="fas fa-arrow-left"></i>
       </button>
     </div>
@@ -62,7 +62,6 @@
       <select id="metodeZakat" name="metodeZakat" onchange="toggleQRZakat()" required>
         <option value="">💳 Metode Pembayaran</option>
         <option value="QR">QR (e-Wallet)</option>
-        <option value="Cash">Tunai (Cash)</option>
       </select>
 
       <div id="qrZakat" class="qr-section" style="display: none;">

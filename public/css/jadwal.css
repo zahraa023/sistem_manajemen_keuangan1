@@ -1,51 +1,44 @@
 
-    /* Reset margin dan padding default untuk semua elemen */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Styling dasar untuk body */
     html, body {
       height: 100%;
       font-family: Arial, sans-serif;
-      background-color: #f0f0f0; /* Warna latar umum */
+      
     }
 
-    /* ================= HEADER ================= */
     .header {
-      background-color: #333;    /* Latar hitam */
-      color: #fff;               /* Warna teks putih */
+      background-color: #333;
+      color: #fff;
       padding: 15px;
-      padding-left: 175px;       /* Geser ke kanan agar sejajar sidebar */
+      padding-left: 175px;
       text-align: left;
       font-weight: bold;
       font-size: 18px;
     }
 
-    /* ================= LAYOUT (Gabungan Sidebar dan Konten) ================= */
     .layout {
       display: flex;
-      min-height: calc(100vh - 60px); /* Sisakan untuk header */
-      background-color: #f0f0f0;
+      min-height: calc(100vh - 60px);
     }
 
-    /* ================= SIDEBAR ================= */
     .sidebar {
-      width: 180px;                    /* Lebar sidebar */
-      background-color: #d5d5d5;       /* Warna latar sidebar */
+      width: 180px;
+      background-color: #d5d5d5;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 30px;
-      border-right: 1px solid #ddd;    /* Garis batas ke konten */
+      border-right: 1px solid #ddd;
     }
 
-    /* ========== Tombol Menu Utama di Sidebar ========== */
     .menu {
       width: 140px;
-      background: #4CAF50;             /* Hijau utama */
+      background: #4CAF50;
       color: #fff;
       border: none;
       margin: 10px 0;
@@ -57,60 +50,86 @@
       transition: all 0.2s ease-in-out;
     }
 
-    /* Hover saat mouse menyentuh tombol */
     .menu:hover {
       background: #388e3c;
       transform: scale(1.05);
     }
 
-    /* ========== Submenu tersembunyi (jika ada) ========== */
-    .submenu {
-      display: none;
-      flex-direction: column;
-      width: 140px;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-
-    /* Tombol-tombol submenu (jika diaktifkan) */
-    .submenu button {
-      background: #66bb6a;
-      margin: 5px 0;
-      font-size: 12px;
-      padding: 8px;
-      border: none;
-      color: white;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-   
-
-    /* ================= KONTEN UTAMA ================= */
     .main-content {
-      flex: 1;
-      padding: 40px 20px;
-      background-color: #f0f0f0;
+  flex: 1;
+  padding: 60px 20px 40px; /* atas lebih besar biar gak mentok */
+  background-image: url('/asset/masjid.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh; /* agar selalu penuh layar */
+  color: #fff; /* teks jadi putih agar kontras */
+}
+
+
+    .judul-jadwal {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      text-align: center;
+    }
+
+    .tanggal-box {
+  background: #388e3c;
+  color: #fff; /* disarankan agar kontras dengan latar belakang */
+  padding: 8px 16px;
+  margin-top: 10px; /* tambahkan jarak dari judul */
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+
+    #jadwal-shalat {
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      gap: 15px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding: 10px 5px;
+      scroll-behavior: smooth;
     }
 
-    .main-content h2 {
+    .jadwal-box {
+      min-width: 140px;
+      flex: 0 0 auto;
+      background: #388e3c;
+      border-radius: 14px;
+      padding: 15px 10px;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .jadwal-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .jadwal-box .label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .jadwal-box .waktu {
       font-size: 24px;
-      margin-bottom: 20px;
-      color: #2c3e50; /* Warna judul konten */
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
-    .main-content img {
-      max-width: 100%;              /* Responsive gambar */
-      height: auto;
-      border-radius: 10px;          /* Sudut membulat */
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1); /* Bayangan */
-      margin-top: 10px;
-    }
-
-    /* ================= FOOTER ================= */
     .footer {
       display: flex;
       justify-content: space-between;
@@ -136,22 +155,10 @@
     .footer iframe {
       width: 100%;
       height: 200px;
-      border: none; /* Tanpa border di peta */
-    }
-
-    /* ================= IKON TAMBAHAN ================= */
-    .arrow {
-      float: right; /* Untuk tanda panah jika perlu */
+      border: none;
     }
 
     .icon {
-      margin-right: 8px; /* Jarak ikon ke teks */
+      margin-right: 8px;
     }
-
-    /* ================= ANIMASI FADE-IN ================= */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
- 
+  

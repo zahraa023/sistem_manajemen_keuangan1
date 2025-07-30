@@ -50,12 +50,11 @@
         <input type="text" placeholder="Jumlah Donasi (Rp)" required>
         <select id="metode" onchange="toggleQR()" required>
           <option value="">-- Pilih Metode --</option>
-          <option value="QR">QR</option>
-          <option value="Cash">Cash</option>
+          <option value="QR">Qris</option>
         </select>
 
         <div id="qrDonasi" class="qr-box" style="display: none;">
-          <h4>Scan QR untuk Donasi</h4>
+          <h4>Scan Qris untuk Donasi</h4>
           <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Donasi+Masjid+Jami" alt="QR Code">
           <p>Gunakan aplikasi e-wallet Anda</p>
         </div>
@@ -69,6 +68,17 @@
       </form>
     </div>
   </div>
+<div class="galeri-update">
+  <h2 class="galeri-title">Update Keberlangsungan Pekerjaan</h2>
+  <div class="carousel-container">
+    <div class="carousel-track">
+      <img src="/asset/bg3.jpg" alt="Update 1">
+      <img src="/asset/bg3.jpg" alt="Update 2">
+      <img src="/asset/bg3.jpg" alt="Update 3">
+      <img src="/asset/bg3.jpg" alt="Update 4">
+    </div>
+  </div>
+</div>
 
   <!-- ========== ULASAN KOMENTAR ========== -->
   <div class="review-section">
@@ -86,6 +96,8 @@
           <button class="review-cancel" onclick="handleCancel()">Batal</button>
           <button class="review-submit" onclick="handleSave()">Simpan</button>
         </div>
+        <div id="commentList" style="margin-top: 30px;"></div>
+
       </div>
     </div>
   </div>

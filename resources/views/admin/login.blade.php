@@ -10,7 +10,7 @@
 <body>
   <div class="container">
     <div class="left-side">
-      <a href="/landingpage" class="back-image-button" title="Kembali ke Home">&#8592;</a>
+      <a href='/' class="back-image-button" title="Kembali ke Home">&#8592;</a>
       <img src="{{ asset('asset/mimbar.png') }}" alt="Masjid">
     </div>
     <div class="right-side">

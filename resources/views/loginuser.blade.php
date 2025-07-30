@@ -13,7 +13,7 @@
 <body>
   <div class="container">
     <div class="left-side">
-      <a href="/landingpage" class="back-image-button" title="Kembali ke landingpage">&#8592;</a>
+      <a href='/'class="back-image-button" title="Kembali ke landingpage">&#8592;</a>
       <img src="{{ asset('asset/mimbar.png') }}" alt="Masjid">
     </div>
 
@@ -37,7 +37,8 @@
         @endif
 
         {{-- Form login hanya template jika nanti kamu sambungkan ke Laravel --}}
-        <form method="POST" action="'/'">
+        <form method="POST" action="/loginuser">
+
           @csrf
           <label for="email">Email</label>
           <input type="email" name="email" placeholder="Masukkan Email" required />

@@ -20,7 +20,6 @@
   <div class="layout">
     <div class="sidebar">
       <button onclick="showSection('profil')">Kelola Profil Masjid</button>
-      <button onclick="showSection('jadwal')">Kelola Jadwal Kegiatan</button>
       <button onclick="showSection('donasi')">Kelola Donasi</button>
       <button onclick="showSection('landingpage')">Kelola Landingpage</button>
     </div>
@@ -33,14 +32,6 @@
         <div class="form-group"><label>Deskripsi</label><textarea rows="5" placeholder="Tuliskan profil dan sejarah masjid..."></textarea></div>
         <div class="form-group"><label>Alamat</label><input type="text" placeholder="Canduang Koto Laweh, Agam, Sumatera Barat"></div>
         <button class="btn">Simpan Profil</button>
-      </div>
-
-      <!-- Jadwal -->
-      <div id="jadwal" class="section">
-        <h2>Jadwal Kegiatan Masjid</h2>
-        <div class="form-group"><label>Nama Kegiatan</label><input type="text" placeholder="Contoh: Pengajian Akbar"></div>
-        <div class="form-group"><label>Upload Poster/Foto</label><input type="file" accept="image/*"></div>
-        <button class="btn">Simpan Jadwal</button>
       </div>
 
       <!-- Donasi -->

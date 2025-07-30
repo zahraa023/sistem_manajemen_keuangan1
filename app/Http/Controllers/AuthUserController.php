@@ -28,7 +28,7 @@ class AuthUserController extends Controller
         Auth::login($user);
 
         // Redirect ke halaman welcome
-        return redirect('/welcome')->with('success', 'Pendaftaran dan login berhasil!');
+        return redirect('/loginuser')->with('success', 'Pendaftaran dan login berhasil!');
     }
 
     public function login(Request $request)
@@ -36,7 +36,7 @@ class AuthUserController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect('/');
+            return redirect('/welcome');
         }
 
         return back()->withErrors([

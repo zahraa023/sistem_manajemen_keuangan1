@@ -15,7 +15,7 @@
 
   <div class="layout">
     <div class="sidebar">
-      <button class="menu" onclick="window.location.href='/'">Home</button>
+      <button class="menu" onclick="window.location.href='/welcome'">Home</button>
       <button class="menu" onclick="window.location.href='/jadwal'">Jadwal</button>
       <button class="menu" onclick="window.location.href='/laporan'">Data Keuangan</button>
 
@@ -38,26 +38,72 @@
       <div style="display: flex; justify-content: center; margin-bottom: 30px;">
         <div style="width: 100%; max-width: 500px; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
           <h3 style="margin-bottom: 15px;">Form Tambah Donasi</h3>
-          <form id="formDonasi">
-            <input type="text" id="nama" placeholder="Nama Donatur" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
-            <input type="date" id="tanggal" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
-            <input type="text" id="jumlah" placeholder="Jumlah Donasi (Rp)" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
-            
+
+          @if(session('success'))
+            <div style="color: green; margin-bottom: 10px;">{{ session('success') }}</div>
+          @endif
+
+          @if($errors->any())
+            <div style="color: red; margin-bottom: 10px;">
+              <ul>
+                @foreach($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+
+         <form id="formDonasi" action="{{ route('donasi.store') }}" method="POST" enctype="multipart/form-data">
+  @csrf
+
+  <input type="text" name="nama" placeholder="Nama Donatur" value="{{ old('nama') }}" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+  
+  <input type="date" name="tanggal" value="{{ old('tanggal') }}" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+  
+  <input 
+    type="text" 
+    name="jumlah" 
+    id="jumlah" 
+    placeholder="Jumlah Donasi (Rp)" 
+    value="{{ old('jumlah') }}" 
+    required 
+    style="width: 100%; margin-bottom: 10px; padding: 8px;" 
+    oninput="formatRupiah(this)"
+  >
+
+<script>
+  function formatRupiah(input) {
+    let value = input.value.replace(/\D/g, '');
+    if (value) {
+      input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    } else {
+      input.value = '';
+    }
+  }
+
+  // Bersihkan titik sebelum submit
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const jumlah = document.getElementById('jumlah');
+    jumlah.value = jumlah.value.replace(/\./g, '');
+  });
+</script>
+
+
+
             <select name="metode" id="metode" onchange="toggleQR()" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
               <option value="">-- Pilih Metode --</option>
-              <option value="QR">QR</option>
-              <option value="Cash">Cash</option>
+              <option value="QR" {{ old('metode') == 'QR' ? 'selected' : '' }}>Qris</option>
             </select>
 
             <!-- QR Section -->
-            <div id="qrDonasi" class="qr-box" style="display: none;">
-              <h3>Scan QR untuk Donasi</h3>
+            <div id="qrDonasi" class="qr-box" style="display: {{ old('metode') == 'QR' ? 'block' : 'none' }};">
+              <h3>Scan Qris untuk Donasi</h3>
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Donasi+Masjid+Jami" alt="QR Code">
               <p>Silakan scan menggunakan aplikasi e-wallet Anda</p>
             </div>
 
             <!-- Upload Bukti -->
-            <div id="buktiTransferContainer" style="display: none; margin-top: 10px;">
+            <div id="buktiTransferContainer" style="display: {{ old('metode') == 'QR' ? 'block' : 'none' }}; margin-top: 10px;">
               <label>Upload Bukti Transfer</label>
               <input type="file" name="bukti" id="buktiTransfer" accept="image/*" style="width: 100%; margin-top: 5px;">
             </div>
@@ -81,20 +127,21 @@
               <th>Metode</th>
             </tr>
           </thead>
-          <tbody id="tabelDonatur">
-            <tr>
-              <td>1</td>
-              <td>Ahmad Z</td>
-              <td>10 Juli 2025</td>
-              <td>Rp100.000</td>
-              <td>QR</td>
-            </tr>
+          <tbody>
+            @foreach($donasis ?? [] as $i => $donasi)
+              <tr>
+                <td>{{ $i + 1 }}</td>
+                <td>{{ $donasi->nama }}</td>
+                <td>{{ \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
+                <td>Rp{{ number_format($donasi->jumlah, 0, ',', '.') }}</td>
+                <td>{{ $donasi->metode }}</td>
+              </tr>
+            @endforeach
           </tbody>
           <tfoot>
             <tr style="background-color: #e0f7e0; font-weight: bold;">
               <td colspan="3" style="text-align: right;">Total Donasi</td>
-              <td id="totalDonasi">Rp100.000</td>
-              <td></td>
+              <td colspan="2">Rp{{ number_format(($donasis ?? collect())->sum('jumlah'), 0, ',', '.') }}</td>
             </tr>
           </tfoot>
         </table>
@@ -123,31 +170,19 @@
       }
     });
 
-  
-  function toggleQR() {
-    const metode = document.getElementById("metode").value;
-    const qrSection = document.getElementById("qrDonasi");
-    const buktiTransfer = document.getElementById("buktiTransferContainer");
+    function toggleQR() {
+      const metode = document.getElementById("metode").value;
+      const qrSection = document.getElementById("qrDonasi");
+      const buktiTransfer = document.getElementById("buktiTransferContainer");
 
-    if (metode === "QR") {
-      qrSection.style.display = "block";
-      qrSection.classList.add("show"); // tambahkan class show
-      buktiTransfer.style.display = "block";
-    } else {
-      qrSection.style.display = "none";
-      qrSection.classList.remove("show"); // hapus class show
-      buktiTransfer.style.display = "none";
+      if (metode === "QR") {
+        qrSection.style.display = "block";
+        buktiTransfer.style.display = "block";
+      } else {
+        qrSection.style.display = "none";
+        buktiTransfer.style.display = "none";
+      }
     }
-  }
-
-
-    document.getElementById('formDonasi').addEventListener('submit', function (e) {
-      e.preventDefault();
-      alert("Data donasi berhasil disimpan secara lokal.");
-      this.reset();
-      document.getElementById('qrDonasi').style.display = 'none';
-      document.getElementById('buktiTransferContainer').style.display = 'none';
-    });
   </script>
 
 </body>
