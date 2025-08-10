@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DonaturZakat extends Model
 {
-    protected $table = 'donatur_zakats';
+    use HasFactory;
 
     protected $fillable = [
         'nama',
@@ -15,7 +16,7 @@ class DonaturZakat extends Model
         'jenis_zakat_id',
         'metode',
         'bukti',
-        'status',
+        'status'
     ];
 
     public function jenisZakat()

@@ -10,9 +10,10 @@ class ZakatController extends Controller
 {
     public function index()
     {
-        // Eager loading relasi jenisZakat supaya bisa dipakai di view
         $jenisZakats = JenisZakat::all();
-        $donaturs = DonaturZakat::with('jenisZakat')->get();
+        $donaturs = DonaturZakat::with('jenisZakat')
+            ->where('status', 'selesai')
+            ->get();
 
         return view('zakat', compact('jenisZakats', 'donaturs'));
     }

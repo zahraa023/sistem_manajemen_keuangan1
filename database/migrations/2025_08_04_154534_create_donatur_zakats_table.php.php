@@ -16,10 +16,13 @@ class CreateDonaturZakatsTable extends Migration
             $table->unsignedBigInteger('jenis_zakat_id');
             $table->string('metode');
             $table->string('bukti')->nullable();
-            $table->enum('status', ['pending', 'approved'])->default('pending');
+            $table->enum('status', ['pending', 'selesai', 'ditolak'])->default('pending');
             $table->timestamps();
 
-            $table->foreign('jenis_zakat_id')->references('id')->on('jenis_zakats')->onDelete('cascade');
+            $table->foreign('jenis_zakat_id')
+                  ->references('id')
+                  ->on('jenis_zakats')
+                  ->onDelete('cascade');
         });
     }
 

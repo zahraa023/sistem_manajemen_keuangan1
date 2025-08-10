@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\DonaturZakat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DonaturZakatController extends Controller
 {
     public function index()
     {
-        $donaturs = DonaturZakat::orderBy('created_at', 'desc')->get();
+        $donaturs = DonaturZakat::with('jenisZakat')->orderBy('created_at', 'desc')->get();
         return view('donatur_zakat', compact('donaturs'));
     }
 
@@ -33,7 +34,13 @@ class DonaturZakatController extends Controller
 
     public function destroy($id)
     {
-        DonaturZakat::destroy($id);
+        $donatur = DonaturZakat::findOrFail($id);
+
+        if ($donatur->bukti && Storage::disk('public')->exists($donatur->bukti)) {
+            Storage::disk('public')->delete($donatur->bukti);
+        }
+
+        $donatur->delete();
         return back()->with('success', 'Donatur berhasil dihapus.');
     }
 }

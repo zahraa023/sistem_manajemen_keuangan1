@@ -95,7 +95,7 @@
   </section>
 
   <!-- Tabel Donatur -->
-  <section class="tabel-donatur" style="margin-top: 30px;">
+<section class="tabel-donatur" style="margin-top: 30px;">
     <h3>Daftar Donatur Zakat</h3>
     <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
       <thead>
@@ -105,6 +105,7 @@
           <th>Jumlah Zakat</th>
           <th>Jenis Zakat</th>
           <th>Metode</th>
+          <th>Bukti Transfer</th> <!-- Tambahan -->
         </tr>
       </thead>
       <tbody>
@@ -115,15 +116,22 @@
             <td>Rp{{ number_format($donatur->jumlah, 0, ',', '.') }}</td>
             <td>{{ $donatur->jenisZakat->nama }}</td>
             <td>{{ $donatur->metode }}</td>
+            <td>
+              @if($donatur->bukti)
+                <img src="{{ asset('storage/' . $donatur->bukti) }}" alt="Bukti" width="100">
+              @else
+                Tidak ada
+              @endif
+            </td>
           </tr>
         @empty
           <tr>
-            <td colspan="5" style="text-align:center;">Belum ada data donatur zakat.</td>
+            <td colspan="6" style="text-align:center;">Belum ada data donatur zakat.</td>
           </tr>
         @endforelse
       </tbody>
     </table>
-  </section>
+</section>
 
   <script>
     function toggleQRZakat() {

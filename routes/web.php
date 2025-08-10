@@ -73,7 +73,7 @@ Route::post('/donatur_zakat', [DonaturZakatController::class, 'store'])->name('d
 Route::get('/zakat', [ZakatController::class, 'index'])->name('zakat.index');
 Route::post('/zakat', [ZakatController::class, 'store'])->name('donatur_zakat.store');
 
-Route::get('/donatur-zakat', [DonaturZakatController::class, 'index'])->name('donatur.zakat');
-Route::get('/donatur-zakat/approve/{id}', [DonaturZakatController::class, 'approve'])->name('donatur.approve');
-Route::get('/donatur-zakat/reject/{id}', [DonaturZakatController::class, 'reject'])->name('donatur.reject');
-Route::delete('/donatur-zakat/delete/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur.delete');
+Route::get('/donatur_zakat', [DonaturZakatController::class, 'index'])->name('donatur.zakat');
+Route::get('/donatur_zakat/approve/{id}', [DonaturZakatController::class, 'approve'])->name('donatur.approve');
+Route::get('/donatur_zakat/reject/{id}', [DonaturZakatController::class, 'reject'])->name('donatur.reject');
+Route::delete('/donatur_zakat/delete/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur.delete');
