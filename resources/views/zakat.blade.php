@@ -54,14 +54,15 @@
       </div>
     @endif
 
-    <form action="{{ route('donatur_zakat.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="formZakat" action="{{ route('donatur_zakat.store') }}" method="POST" enctype="multipart/form-data">
       @csrf
       <input type="text" id="nama" name="nama" placeholder="Nama Muzakki" value="{{ old('nama') }}" required>
 
       <input type="date" id="tanggal" name="tanggal" value="{{ old('tanggal') }}" required
              style="width: 100%; margin-bottom: 10px; padding: 8px; font-family: inherit; border: 1px solid #ccc; border-radius: 4px; color: #555;">
 
-      <input type="number" id="jumlah" name="jumlah" placeholder="Jumlah Zakat (Rp)" value="{{ old('jumlah') }}" required min="0" step="1000">
+      <!-- ubah type number jadi text untuk formatting -->
+      <input type="text" id="jumlah" name="jumlah" placeholder="Jumlah Zakat (Rp)" value="{{ old('jumlah') }}" required>
 
       <select id="jenisZakat" name="jenis_zakat_id" required>
         <option value="">Pilih Jenis Zakat</option>
@@ -95,7 +96,7 @@
   </section>
 
   <!-- Tabel Donatur -->
-<section class="tabel-donatur" style="margin-top: 30px;">
+  <section class="tabel-donatur" style="margin-top: 30px;">
     <h3>Daftar Donatur Zakat</h3>
     <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
       <thead>
@@ -105,7 +106,6 @@
           <th>Jumlah Zakat</th>
           <th>Jenis Zakat</th>
           <th>Metode</th>
-          <th>Bukti Transfer</th> <!-- Tambahan -->
         </tr>
       </thead>
       <tbody>
@@ -116,24 +116,34 @@
             <td>Rp{{ number_format($donatur->jumlah, 0, ',', '.') }}</td>
             <td>{{ $donatur->jenisZakat->nama }}</td>
             <td>{{ $donatur->metode }}</td>
-            <td>
-              @if($donatur->bukti)
-                <img src="{{ asset('storage/' . $donatur->bukti) }}" alt="Bukti" width="100">
-              @else
-                Tidak ada
-              @endif
-            </td>
           </tr>
         @empty
           <tr>
-            <td colspan="6" style="text-align:center;">Belum ada data donatur zakat.</td>
+            <td colspan="5" style="text-align:center;">Belum ada data donatur zakat.</td>
           </tr>
         @endforelse
       </tbody>
     </table>
-</section>
+  </section>
 
   <script>
+    // Format input jumlah dengan titik sebagai pemisah ribuan saat ketik
+    const jumlahInput = document.getElementById('jumlah');
+
+    jumlahInput.addEventListener('input', function(e) {
+      // Hapus karakter yang bukan angka
+      let value = this.value.replace(/\D/g, '');
+      // Format dengan titik setiap 3 digit
+      value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      this.value = value;
+    });
+
+    // Saat submit, hilangkan titik agar backend dapat angka bersih
+    document.getElementById('formZakat').addEventListener('submit', function(e) {
+      jumlahInput.value = jumlahInput.value.replace(/\./g, '');
+    });
+
+    // Fungsi toggle QR dan upload bukti
     function toggleQRZakat() {
       const metode = document.getElementById("metodeZakat").value;
       const qrDiv = document.getElementById("qrZakat");
