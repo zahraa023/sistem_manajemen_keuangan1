@@ -7,27 +7,28 @@
   <title>Data Donatur</title>
   <link href="{{ asset('css/dash.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  
 </head>
 <body>
 
-  <div class="header">Data Donatur</div>
-
-  <!-- CONTAINER -->
-  <div class="container" style="display:flex; height:calc(100vh - 50px);">
-    <!-- SIDEBAR -->
-    <div class="sidebar" style="background-color:#2f2f2f; width:200px; display:flex; flex-direction:column; padding-top:10px;">
-      <button class="active" onclick="showContent('dashboard', event)">Dashboard Admin</button>
-      <button onclick="window.location.href='/adminpanel'">Admin Panel</button>
-      <button onclick="window.location.href='/donatur'">Donatur</button>
-      <button onclick="showContent('kelompok donasi', event)">Kelompok Donasi</button>
+    <!-- Header -->
+    <div class="header">
+        <button class="back-button" onclick="window.location.href='/dashben'">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="header-title">Data Donatur</div>
     </div>
+
+    <!-- CONTAINER -->
+    <div class="container">
+        
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <button onclick="window.location.href='/donatur'">Donatur</button>
+        </div>
 
     <div class="content">
       <h2>Daftar Donatur</h2>
-
-      <div class="filter-buttons">
-        <button onclick="cetakPDFDonatur()">Cetak PDF</button>
-      </div>
 
       <table id="donaturTable">
         <thead>
@@ -92,34 +93,27 @@
 </tbody>
 
   <!-- Script -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script>
-    function toggleFormDonatur() {
-      const form = document.getElementById('formDonatur');
-      form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-    }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    function hapusBaris(button) {
-      if (confirm('Yakin ingin menghapus donatur ini?')) {
-        const row = button.closest('tr');
-        row.remove();
-        // Kirim request DELETE ke server jika perlu
-      }
-    }
+<script>
+  function toggleFormDonatur() {
+    const form = document.getElementById('formDonatur');
+    form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+  }
 
-    function cetakPDFDonatur() {
-      const element = document.getElementById('donaturTable');
-      html2canvas(element).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('donatur.pdf');
-      });
+  function hapusBaris(button) {
+    if (confirm('Yakin ingin menghapus donatur ini?')) {
+      const row = button.closest('tr');
+      row.remove();
+      // Kirim request DELETE ke server jika perlu
     }
-  </script>
+  }
 
+  function toggleDropdown() {
+    const dropdown = document.getElementById('dropdownMenu');
+    dropdown.style.display = dropdown.style.display === 'none' ? 'flex' : 'none';
+  }
+</script>
 </body>
 </html>

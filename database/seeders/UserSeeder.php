@@ -8,23 +8,25 @@ use App\Models\User;
 
 class UserSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
+        // Admin
         User::firstOrCreate(
-            ['email' => 'admin@example.com'],
+            ['email' => 'admin@gmail.com'],
             [
-                'name'     => 'Admin',
+                'name' => 'Admin',
                 'password' => Hash::make('admin123'),
-                'role'     => 'admin',
+                'role' => 'admin',
             ]
         );
 
+        // Bendahara
         User::firstOrCreate(
-            ['email' => 'bendahara@example.com'],
+            ['email' => 'bendahara@gmail.com'],
             [
-                'name'     => 'Bendahara',
+                'name' => 'Bendahara',
                 'password' => Hash::make('bendahara123'),
-                'role'     => 'bendahara',
+                'role' => 'bendahara',
             ]
         );
     }

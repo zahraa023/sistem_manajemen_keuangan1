@@ -115,19 +115,28 @@
         </div>
       </div>
 
-      <!-- Tabel Donatur -->
-      <div class="tabel-donatur">
-        <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Nama Donatur</th>
-              <th>Tanggal</th>
-              <th>Jumlah</th>
-              <th>Metode</th>
-            </tr>
-          </thead>
-          <tbody>
+       <!-- Tabel Donatur -->
+  <div class="tabel-donatur">
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Donatur</th>
+          <th>Jumlah Zakat</th>
+          <th>Jenis Zakat</th>
+          <th>Metode</th>
+        </tr>
+      </thead>
+      <tbody id="tabelDonatur">
+        <tr>
+          <td>1</td>
+          <td>Ahmad Z</td>
+          <td>Rp100.000</td>
+          <td>Zakat Mal</td>
+          <td>QR</td>
+        </tr>
+      </tbody>
+      <tfoot>
             @foreach($donasis ?? [] as $i => $donasi)
               <tr>
                 <td>{{ $i + 1 }}</td>

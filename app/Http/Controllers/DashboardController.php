@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Donasi;
+use App\Models\Kampanye;
+use App\Models\Galeri;
 
 class DashboardController extends Controller
 {
     public function storeDonatur(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required|string|max:255',
+            'nama'    => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'jumlah' => 'required|numeric',
-            'metode' => 'nullable|string|max:100',
-            'bukti' => 'nullable|image|max:2048',
-            'status' => 'nullable|string|max:50',
+            'jumlah'  => 'required|numeric',
+            'metode'  => 'nullable|string|max:100',
+            'bukti'   => 'nullable|image|max:2048',
+            'status'  => 'nullable|string|max:50',
+            'jenis'   => 'required|string|in:masjid,karpet', // ✅ Tambahkan jenis donasi
         ]);
 
         if ($request->hasFile('bukti')) {
@@ -50,5 +53,40 @@ class DashboardController extends Controller
         $donasi->delete();
 
         return redirect()->back()->with('success', 'Donatur berhasil dihapus.');
+    }
+
+    // ✅ Tampilkan kelompok donasi
+    public function keldonasi()
+    {
+        $donasiMasjid = Donasi::where('jenis', 'masjid')->orderBy('tanggal', 'desc')->get();
+        $donasiKarpet = Donasi::where('jenis', 'karpet')->orderBy('tanggal', 'desc')->get();
+        $kampanye = Kampanye::first(); // Ambil target & hari tersisa
+
+        return view('admin.keldonasi', compact('donasiMasjid', 'donasiKarpet', 'kampanye'));
+    }
+
+    // ✅ Simpan perubahan kampanye
+    public function updateKampanye(Request $request)
+    {
+        $kampanye = Kampanye::first(); // Ambil baris pertama, atau buat baru
+        if (!$kampanye) {
+            $kampanye = new Kampanye();
+        }
+
+        $kampanye->target = $request->target;
+        $kampanye->hari_tersisa = $request->hari_tersisa;
+        $kampanye->save();
+
+        if ($request->hasFile('galeri')) {
+            foreach ($request->file('galeri') as $file) {
+                $path = $file->store('galeri', 'public');
+                Galeri::create([
+                    'kampanye_id' => $kampanye->id,
+                    'gambar' => $path
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Kampanye berhasil diperbarui.');
     }
 }

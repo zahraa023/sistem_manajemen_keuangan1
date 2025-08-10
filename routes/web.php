@@ -7,8 +7,9 @@ use App\Http\Controllers\DonasiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DonasisdController;
 use App\Http\Controllers\Auth\LoginController;
-
-
+use App\Http\Controllers\KampanyeController;
+use App\Http\Controllers\DonaturZakatController;
+use App\Http\Controllers\ZakatController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +30,7 @@ Route::view('/loginuser', 'loginuser');
 Route::view('/donatur', 'admin.donatur');
 Route::view('/welcome', 'welcome');
 Route::view('/akun', 'akun');
-Route::view('/adminpanel', 'admin.adminpanel');
+Route::view('/kellanding', 'admin.kellanding');
 
 // Jadwal Shalat
 Route::get('/jadwal', [JadwalShalatController::class, 'showJadwal']);
@@ -58,5 +59,21 @@ Route::get('/dashboard', function () {
 Route::get('/dashben', function () {
     return view('admin.dashben');
 });
+Route::get('/keldonasi', [KampanyeController::class, 'index'])->name('kelompok.donasi');
 
+Route::get('/donatur_zakat', [DonaturZakatController::class, 'index'])->name('donatur_zakat.index');
+Route::get('/donatur_zakat/create', [DonaturZakatController::class, 'create'])->name('donatur_zakat.create');
+Route::post('/donatur_zakat', [DonaturZakatController::class, 'store'])->name('donatur_zakat.store');
+Route::put('/donatur_zakat/approve/{id}', [DonaturZakatController::class, 'approve'])->name('donatur_zakat.approve');
+Route::delete('/donatur_zakat/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur_zakat.destroy');
 
+Route::get('/donatur_zakat', [DonaturZakatController::class, 'index'])->name('donatur_zakat.index');
+Route::post('/donatur_zakat', [DonaturZakatController::class, 'store'])->name('donatur_zakat.store');
+
+Route::get('/zakat', [ZakatController::class, 'index'])->name('zakat.index');
+Route::post('/zakat', [ZakatController::class, 'store'])->name('donatur_zakat.store');
+
+Route::get('/donatur-zakat', [DonaturZakatController::class, 'index'])->name('donatur.zakat');
+Route::get('/donatur-zakat/approve/{id}', [DonaturZakatController::class, 'approve'])->name('donatur.approve');
+Route::get('/donatur-zakat/reject/{id}', [DonaturZakatController::class, 'reject'])->name('donatur.reject');
+Route::delete('/donatur-zakat/delete/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur.delete');

@@ -6,21 +6,7 @@
   <title>Dashboard Admin</title>
   <link href="{{ asset('css/dash.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    .btn-white {
-      background-color: white;
-      color: black;
-      border: 1px solid #ccc;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .sidebar button.active {
-      background-color: #4CAF50;
-      color: white;
-    }
-  </style>
+
 </head>
 <body>
 
@@ -37,9 +23,8 @@
     <!-- SIDEBAR -->
     <div class="sidebar" style="background-color:#2f2f2f; width:200px; display:flex; flex-direction:column; padding-top:10px;">
       <button class="active" onclick="showContent('dashboard', event)">Dashboard Admin</button>
-      <button onclick="window.location.href='/adminpanel'">Admin Panel</button>
-      <button onclick="window.location.href='/donatur'">Donatur</button>
-      <button onclick="showContent('kelompok donasi', event)">Kelompok Donasi</button>
+      <button onclick="window.location.href='/kellanding'">Kelola Landing Page</button>
+      <button onclick="window.location.href='/keldonasi'">Kelompok Donasi</button>
     </div>
 
     <!-- MAIN CONTENT -->

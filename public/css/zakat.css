@@ -294,3 +294,28 @@ table tbody tr:nth-child(even) {
     padding: 20px;
   }
 }
+  .form-container input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-family: inherit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .input-date-wrapper {
+    margin-bottom: 10px;
+  }
+
+  .input-icon-label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(50%);
+  }
+
