@@ -15,7 +15,7 @@
 
   <!-- Header -->
   <div class="header">
-    <button class="back-button" onclick="window.location.href='/dashben'">
+    <button class="back-button" onclick="window.location.href='/dashboard'">
       <i class="fas fa-arrow-left"></i>
     </button>
     Manajemen Donasi Masjid
@@ -28,11 +28,13 @@
     <div class="sidebar">
       
       <button class="active">Kelompok Donasi</button>
+      
     </div>
 
     <!-- Content -->
     <div class="content">
       <h2>Kelompok Donasi</h2>
+      <button class="btn" onclick="toggleForm('formRingkasan')">+ Tambah Data</button>
 
       <!-- Donasi Toilet -->
       <div class="dashboard-card">

@@ -53,46 +53,45 @@
             </div>
           @endif
 
-         <form id="formDonasi" action="{{ route('donasi.store') }}" method="POST" enctype="multipart/form-data">
-  @csrf
+          <form id="formDonasi" action="{{ route('donasi.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-  <input type="text" name="nama" placeholder="Nama Donatur" value="{{ old('nama') }}" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
-  
-  <input type="date" name="tanggal" value="{{ old('tanggal') }}" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
-  
-  <input 
-    type="text" 
-    name="jumlah" 
-    id="jumlah" 
-    placeholder="Jumlah Donasi (Rp)" 
-    value="{{ old('jumlah') }}" 
-    required 
-    style="width: 100%; margin-bottom: 10px; padding: 8px;" 
-    oninput="formatRupiah(this)"
-  >
+            <input type="text" name="nama" placeholder="Nama Donatur" value="{{ old('nama') }}" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+            
+            <input type="date" name="tanggal" value="{{ old('tanggal') }}" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
+            
+            <input 
+              type="text" 
+              name="jumlah" 
+              id="jumlah" 
+              placeholder="Jumlah Donasi (Rp)" 
+              value="{{ old('jumlah') }}" 
+              required 
+              style="width: 100%; margin-bottom: 10px; padding: 8px;" 
+              oninput="formatRupiah(this)"
+            >
 
-<script>
-  function formatRupiah(input) {
-    let value = input.value.replace(/\D/g, '');
-    if (value) {
-      input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    } else {
-      input.value = '';
-    }
-  }
+            <script>
+              function formatRupiah(input) {
+                let value = input.value.replace(/\D/g, '');
+                if (value) {
+                  input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+                } else {
+                  input.value = '';
+                }
+              }
 
-  // Bersihkan titik sebelum submit
-  document.querySelector('form').addEventListener('submit', function(e) {
-    const jumlah = document.getElementById('jumlah');
-    jumlah.value = jumlah.value.replace(/\./g, '');
-  });
-</script>
-
-
+              // Bersihkan titik sebelum submit
+              document.querySelector('form').addEventListener('submit', function(e) {
+                const jumlah = document.getElementById('jumlah');
+                jumlah.value = jumlah.value.replace(/\./g, '');
+              });
+            </script>
 
             <select name="metode" id="metode" onchange="toggleQR()" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
               <option value="">-- Pilih Metode --</option>
               <option value="QR" {{ old('metode') == 'QR' ? 'selected' : '' }}>Qris</option>
+              <option value="Cash" {{ old('metode') == 'Cash' ? 'selected' : '' }}>Cash</option>
             </select>
 
             <!-- QR Section -->
@@ -115,48 +114,43 @@
         </div>
       </div>
 
-       <!-- Tabel Donatur -->
-  <div class="tabel-donatur">
-    <table>
-      <thead>
+      <!-- Tabel Donasi -->
+      <!-- Tabel Donasi -->
+<div class="tabel-donatur">
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama Donatur</th>
+        <th>Tanggal</th>
+        <th>Jumlah Donasi</th>
+        <th>Metode</th>
+      </tr>
+    </thead>
+    <tbody>
+      @forelse ($donasis as $i => $donasi)
         <tr>
-          <th>No</th>
-          <th>Nama Donatur</th>
-          <th>Jumlah Zakat</th>
-          <th>Jenis Zakat</th>
-          <th>Metode</th>
+          <td>{{ $i + 1 }}</td>
+          <td>{{ $donasi->nama }}</td>
+          <td>{{ \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
+          <td>Rp{{ number_format($donasi->jumlah, 0, ',', '.') }}</td>
+          <td>{{ $donasi->metode }}</td>
         </tr>
-      </thead>
-      <tbody id="tabelDonatur">
+      @empty
         <tr>
-          <td>1</td>
-          <td>Ahmad Z</td>
-          <td>Rp100.000</td>
-          <td>Zakat Mal</td>
-          <td>QR</td>
+          <td colspan="5">Belum ada data donasi.</td>
         </tr>
-      </tbody>
-      <tfoot>
-            @foreach($donasis ?? [] as $i => $donasi)
-              <tr>
-                <td>{{ $i + 1 }}</td>
-                <td>{{ $donasi->nama }}</td>
-                <td>{{ \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
-                <td>Rp{{ number_format($donasi->jumlah, 0, ',', '.') }}</td>
-                <td>{{ $donasi->metode }}</td>
-              </tr>
-            @endforeach
-          </tbody>
-          <tfoot>
-            <tr style="background-color: #e0f7e0; font-weight: bold;">
-              <td colspan="3" style="text-align: right;">Total Donasi</td>
-              <td colspan="2">Rp{{ number_format(($donasis ?? collect())->sum('jumlah'), 0, ',', '.') }}</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-  </div>
+      @endforelse
+    </tbody>
+    <tfoot>
+      <tr style="background-color: #e0f7e0; font-weight: bold;">
+        <td colspan="3" style="text-align: right;">Total Donasi</td>
+        <td colspan="2">Rp{{ number_format(($donasis->sum('jumlah') ?? 0), 0, ',', '.') }}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
 
   <!-- Script -->
   <script>

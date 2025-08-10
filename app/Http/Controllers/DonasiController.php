@@ -8,7 +8,11 @@ class DonasiController extends Controller
 {
     public function create()
     {
-        return view('donasi');
+        // Ambil semua data donasi dari database
+        $donasis = Donasi::all();
+
+        // Kirim data ke view 'donasi'
+        return view('donasi', compact('donasis'));
     }
 
     public function store(Request $request)
@@ -16,7 +20,7 @@ class DonasiController extends Controller
         $request->validate([
             'nama'    => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'jumlah' => 'required|numeric',
+            'jumlah'  => 'required|numeric',
             'metode'  => 'required|string|in:QR,Cash',
             'bukti'   => 'nullable|image|max:2048',
         ]);
