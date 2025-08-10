@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\KampanyeController;
 use App\Http\Controllers\DonaturZakatController;
 use App\Http\Controllers\ZakatController;
+use App\Http\Controllers\KelompokDonasiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -77,3 +78,8 @@ Route::get('/donatur_zakat', [DonaturZakatController::class, 'index'])->name('do
 Route::get('/donatur_zakat/approve/{id}', [DonaturZakatController::class, 'approve'])->name('donatur.approve');
 Route::get('/donatur_zakat/reject/{id}', [DonaturZakatController::class, 'reject'])->name('donatur.reject');
 Route::delete('/donatur_zakat/delete/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur.delete');
+
+Route::get('/kelompok-donasi', [KelompokDonasiController::class, 'index'])->name('kelompok-donasi.index');
+Route::post('/kelompok-donasi', [KelompokDonasiController::class, 'store'])->name('kelompok-donasi.store');
+Route::put('/kelompok-donasi/{id}', [KelompokDonasiController::class, 'update'])->name('kelompok-donasi.update');
+Route::delete('/kelompok-donasi/{id}', [KelompokDonasiController::class, 'destroy'])->name('kelompok-donasi.destroy');
