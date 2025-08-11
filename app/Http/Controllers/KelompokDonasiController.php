@@ -2,90 +2,91 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\KelompokDonasi;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class KelompokDonasiController extends Controller
 {
     public function index()
     {
-        $kelompokDonasi = KelompokDonasi::all();
-        return view('kelompok_donasi.index', compact('kelompokDonasi'));
+        $donasi = KelompokDonasi::latest()->get();
+        return view('admin.keldonasi', compact('donasi'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kelompok' => 'required|string|max:255',
-            'target' => 'required|integer|min:0',
-            'terkumpul' => 'nullable|integer|min:0',
-            'galeri.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'judul' => 'required|string|max:255',
+            'target' => 'required|numeric|min:0',
+            'terkumpul' => 'nullable|numeric|min:0',
+            'galeri.*' => 'image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
-        $galeriFiles = [];
+        $galeriPaths = [];
         if ($request->hasFile('galeri')) {
             foreach ($request->file('galeri') as $file) {
-                $path = $file->store('kelompok_galeri', 'public');
-                $galeriFiles[] = $path;
+                $galeriPaths[] = $file->store('galeri_donasi', 'public');
             }
         }
 
         KelompokDonasi::create([
-            'nama_kelompok' => $request->nama_kelompok,
+            'judul' => $request->judul,
             'target' => $request->target,
             'terkumpul' => $request->terkumpul ?? 0,
-            'galeri' => $galeriFiles,
+            'galeri' => $galeriPaths ? json_encode($galeriPaths) : null
         ]);
 
-        return redirect()->back()->with('success', 'Data Kelompok Donasi berhasil ditambahkan');
+        return redirect()->back()->with('success', 'Data donasi berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $donasi = KelompokDonasi::findOrFail($id);
+        return view('admin.keldonasi_edit', compact('donasi'));
     }
 
     public function update(Request $request, $id)
     {
-        $kd = KelompokDonasi::findOrFail($id);
-
         $request->validate([
-            'nama_kelompok' => 'required|string|max:255',
-            'target' => 'required|integer|min:0',
-            'terkumpul' => 'nullable|integer|min:0',
-            'galeri.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'judul' => 'required|string|max:255',
+            'target' => 'required|numeric|min:0',
+            'terkumpul' => 'nullable|numeric|min:0',
+            'galeri.*' => 'image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
-        // Handle upload baru, gabungkan dengan galeri lama jika ada
-        $galeriFiles = $kd->galeri ?? [];
+        $donasi = KelompokDonasi::findOrFail($id);
+
+        $galeriPaths = $donasi->galeri ? json_decode($donasi->galeri, true) : [];
 
         if ($request->hasFile('galeri')) {
             foreach ($request->file('galeri') as $file) {
-                $path = $file->store('kelompok_galeri', 'public');
-                $galeriFiles[] = $path;
+                $galeriPaths[] = $file->store('galeri_donasi', 'public');
             }
         }
 
-        $kd->update([
-            'nama_kelompok' => $request->nama_kelompok,
+        $donasi->update([
+            'judul' => $request->judul,
             'target' => $request->target,
             'terkumpul' => $request->terkumpul ?? 0,
-            'galeri' => $galeriFiles,
+            'galeri' => $galeriPaths ? json_encode($galeriPaths) : null
         ]);
 
-        return redirect()->back()->with('success', 'Data Kelompok Donasi berhasil diperbarui');
+        return redirect()->route('kelompok-donasi.index')->with('success', 'Data donasi berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        $kd = KelompokDonasi::findOrFail($id);
+        $donasi = KelompokDonasi::findOrFail($id);
 
-        // Hapus file galeri dari storage
-        if ($kd->galeri) {
-            foreach ($kd->galeri as $file) {
+        if ($donasi->galeri) {
+            foreach (json_decode($donasi->galeri) as $file) {
                 Storage::disk('public')->delete($file);
             }
         }
 
-        $kd->delete();
+        $donasi->delete();
 
-        return redirect()->back()->with('success', 'Data Kelompok Donasi berhasil dihapus');
+        return redirect()->back()->with('success', 'Data donasi berhasil dihapus.');
     }
 }
-

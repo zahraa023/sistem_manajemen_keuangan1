@@ -79,7 +79,9 @@ Route::get('/donatur_zakat/approve/{id}', [DonaturZakatController::class, 'appro
 Route::get('/donatur_zakat/reject/{id}', [DonaturZakatController::class, 'reject'])->name('donatur.reject');
 Route::delete('/donatur_zakat/delete/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur.delete');
 
-Route::get('/kelompok-donasi', [KelompokDonasiController::class, 'index'])->name('kelompok-donasi.index');
-Route::post('/kelompok-donasi', [KelompokDonasiController::class, 'store'])->name('kelompok-donasi.store');
-Route::put('/kelompok-donasi/{id}', [KelompokDonasiController::class, 'update'])->name('kelompok-donasi.update');
-Route::delete('/kelompok-donasi/{id}', [KelompokDonasiController::class, 'destroy'])->name('kelompok-donasi.destroy');
+
+Route::get('/keldonasi', [KelompokDonasiController::class, 'index'])->name('kelompok-donasi.index');
+Route::post('/keldonasi', [KelompokDonasiController::class, 'store'])->name('kelompok-donasi.store');
+Route::get('/keldonasi/{id}/edit', [KelompokDonasiController::class, 'edit'])->name('kelompok-donasi.edit');
+Route::put('/keldonasi/{id}', [KelompokDonasiController::class, 'update'])->name('kelompok-donasi.update');
+Route::delete('/keldonasi/{id}', [KelompokDonasiController::class, 'destroy'])->name('kelompok-donasi.destroy');

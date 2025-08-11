@@ -76,6 +76,36 @@ body {
   background-color: #3e8e41;
 }
 
+        .galeri-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .galeri-container img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            transition: transform 0.2s ease;
+        }
+        .galeri-container img:hover {
+            transform: scale(1.8);
+            z-index: 5;
+        }
+        .form-edit, .form-tambah {
+            max-width: 450px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+            margin-top: 15px;
+        }
+        .hidden {
+            display: none;
+        }
+    
+
 .btn-white {
   background-color: white;
   color: black;
