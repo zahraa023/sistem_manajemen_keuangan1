@@ -10,7 +10,6 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        // Admin
         User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
             [
@@ -20,7 +19,6 @@ class UserSeeder extends Seeder
             ]
         );
 
-        // Bendahara
         User::firstOrCreate(
             ['email' => 'bendahara@gmail.com'],
             [

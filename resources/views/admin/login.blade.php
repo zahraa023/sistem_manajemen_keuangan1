@@ -17,13 +17,11 @@
       <div class="login-box">
         <h2>Halaman Login</h2>
 
-        <!-- Role Tabs -->
         <div class="role-tabs">
-          <button class="role-tab active" onclick="switchTab('admin', event)">ADMIN</button>
-          <button class="role-tab" onclick="switchTab('bendahara', event)">BENDAHARA</button>
+          <button type="button" class="role-tab active" onclick="switchTab('admin', event)">ADMIN</button>
+          <button type="button" class="role-tab" onclick="switchTab('bendahara', event)">BENDAHARA</button>
         </div>
 
-        <!-- Login Form -->
         <form method="POST" action="{{ route('login') }}">
           @csrf
           <input type="hidden" name="role" id="login-role" value="admin" />
@@ -44,7 +42,6 @@
             @endforeach
           </div>
         @endif
-
       </div>
     </div>
   </div>
