@@ -10,6 +10,12 @@ class Donasi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama', 'tanggal', 'jumlah', 'metode', 'bukti', 'status'
+        'nama',
+        'tanggal',
+        'jumlah',
+        'metode',
+        'jenis',
+        'bukti',
+        'status'
     ];
 }

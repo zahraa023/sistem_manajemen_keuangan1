@@ -94,37 +94,48 @@
       </button>
     </form>
   </section>
-
-  <!-- Tabel Donatur -->
-  <section class="tabel-donatur" style="margin-top: 30px;">
+  
+<!-- Tabel Donatur -->
+<section class="tabel-donatur" style="margin-top: 30px;">
     <h3>Daftar Donatur Zakat</h3>
     <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-      <thead>
-        <tr style="background-color: #e0f7e0; font-weight: bold;">
-          <th>No</th>
-          <th>Nama Donatur</th>
-          <th>Jumlah Zakat</th>
-          <th>Jenis Zakat</th>
-          <th>Metode</th>
-        </tr>
-      </thead>
-      <tbody>
-        @forelse ($donaturs as $index => $donatur)
-          <tr>
-            <td>{{ $index + 1 }}</td>
-            <td>{{ $donatur->nama }}</td>
-            <td>Rp{{ number_format($donatur->jumlah, 0, ',', '.') }}</td>
-            <td>{{ $donatur->jenisZakat->nama }}</td>
-            <td>{{ $donatur->metode }}</td>
-          </tr>
-        @empty
-          <tr>
-            <td colspan="5" style="text-align:center;">Belum ada data donatur zakat.</td>
-          </tr>
-        @endforelse
-      </tbody>
+        <thead>
+            <tr style="background-color: #e0f7e0; font-weight: bold;">
+                <th>No</th>
+                <th>Nama Donatur</th>
+                <th>Jumlah Zakat</th>
+                <th>Jenis Zakat</th>
+                <th>Metode</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($donaturs as $index => $donatur)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $donatur->nama }}</td>
+                    <td>Rp{{ number_format($donatur->jumlah, 0, ',', '.') }}</td>
+                    <td>{{ $donatur->jenisZakat->nama }}</td>
+                    <td>{{ $donatur->metode }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="5" style="text-align:center;">Belum ada data donatur zakat.</td>
+                </tr>
+            @endforelse
+        </tbody>
+        @if ($donaturs->count() > 0)
+            <tfoot>
+                <tr style="background-color: #dff6df; font-weight: bold;">
+                    <td colspan="3" style="text-align: center;">Total Donasi</td>
+                    <td colspan="2">
+                        Rp{{ number_format($donaturs->sum('jumlah'), 0, ',', '.') }}
+                    </td>
+                </tr>
+            </tfoot>
+        @endif
     </table>
-  </section>
+</section>
+
 
   <script>
     // Format input jumlah dengan titik sebagai pemisah ribuan saat ketik

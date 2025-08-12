@@ -11,6 +11,8 @@ use App\Http\Controllers\KampanyeController;
 use App\Http\Controllers\DonaturZakatController;
 use App\Http\Controllers\ZakatController;
 use App\Http\Controllers\KelompokDonasiController;
+use App\Http\Controllers\DonaturController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,3 +87,11 @@ Route::post('/keldonasi', [KelompokDonasiController::class, 'store'])->name('kel
 Route::get('/keldonasi/{id}/edit', [KelompokDonasiController::class, 'edit'])->name('kelompok-donasi.edit');
 Route::put('/keldonasi/{id}', [KelompokDonasiController::class, 'update'])->name('kelompok-donasi.update');
 Route::delete('/keldonasi/{id}', [KelompokDonasiController::class, 'destroy'])->name('kelompok-donasi.destroy');
+
+// Halaman Donatur
+Route::get('/donatur', [DonaturController::class, 'index'])->name('donatur.index');
+
+Route::get('/donatur', [DonaturController::class, 'index'])->name('donatur.index');
+Route::put('/donatur/{id}/approve', [DonaturController::class, 'approve'])->name('donatur.approve');
+Route::put('/donatur/{id}/reject', [DonaturController::class, 'reject'])->name('donatur.reject');
+Route::delete('/donatur/{id}', [DonaturController::class, 'destroy'])->name('donatur.destroy');

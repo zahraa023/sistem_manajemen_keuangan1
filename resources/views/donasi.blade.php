@@ -18,15 +18,8 @@
       <button class="menu" onclick="window.location.href='/welcome'">Home</button>
       <button class="menu" onclick="window.location.href='/jadwal'">Jadwal</button>
       <button class="menu" onclick="window.location.href='/laporan'">Data Keuangan</button>
-
-      <div class="dropdown-wrapper">
-        <button class="menu dropdown-toggle" onclick="toggleDropdown(event)">Donasi ⯆</button>
-        <div id="dropdownMenu" class="dropdown-menu">
-          <button class="submenu" onclick="window.location.href='/deskripsi'">Donasi Toilet</button>
-          <button class="submenu" onclick="showContent('DonasiKarpet', event)">Donasi Karpet</button>
-        </div>
-        <button class="menu" onclick="window.location.href='/zakat'">Zakat</button>
-      </div>
+      <button class="menu" onclick="window.location.href='/donasi'">Donasi</button>
+      <button class="menu" onclick="window.location.href='/zakat'">Zakat</button>
     </div>
 
     <div class="main-content">
@@ -81,7 +74,6 @@
                 }
               }
 
-              // Bersihkan titik sebelum submit
               document.querySelector('form').addEventListener('submit', function(e) {
                 const jumlah = document.getElementById('jumlah');
                 jumlah.value = jumlah.value.replace(/\./g, '');
@@ -91,17 +83,14 @@
             <select name="metode" id="metode" onchange="toggleQR()" required style="width: 100%; margin-bottom: 10px; padding: 8px;">
               <option value="">-- Pilih Metode --</option>
               <option value="QR" {{ old('metode') == 'QR' ? 'selected' : '' }}>Qris</option>
-              <option value="Cash" {{ old('metode') == 'Cash' ? 'selected' : '' }}>Cash</option>
             </select>
 
-            <!-- QR Section -->
             <div id="qrDonasi" class="qr-box" style="display: {{ old('metode') == 'QR' ? 'block' : 'none' }};">
               <h3>Scan Qris untuk Donasi</h3>
               <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Donasi+Masjid+Jami" alt="QR Code">
               <p>Silakan scan menggunakan aplikasi e-wallet Anda</p>
             </div>
 
-            <!-- Upload Bukti -->
             <div id="buktiTransferContainer" style="display: {{ old('metode') == 'QR' ? 'block' : 'none' }}; margin-top: 10px;">
               <label>Upload Bukti Transfer</label>
               <input type="file" name="bukti" id="buktiTransfer" accept="image/*" style="width: 100%; margin-top: 5px;">
@@ -115,64 +104,44 @@
       </div>
 
       <!-- Tabel Donasi -->
-      <!-- Tabel Donasi -->
-<div class="tabel-donatur">
-  <table>
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Nama Donatur</th>
-        <th>Tanggal</th>
-        <th>Jumlah Donasi</th>
-        <th>Metode</th>
-      </tr>
-    </thead>
-    <tbody>
-      @forelse ($donasis as $i => $donasi)
-        <tr>
-          <td>{{ $i + 1 }}</td>
-          <td>{{ $donasi->nama }}</td>
-          <td>{{ \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
-          <td>Rp{{ number_format($donasi->jumlah, 0, ',', '.') }}</td>
-          <td>{{ $donasi->metode }}</td>
-        </tr>
-      @empty
-        <tr>
-          <td colspan="5">Belum ada data donasi.</td>
-        </tr>
-      @endforelse
-    </tbody>
-    <tfoot>
-      <tr style="background-color: #e0f7e0; font-weight: bold;">
-        <td colspan="3" style="text-align: right;">Total Donasi</td>
-        <td colspan="2">Rp{{ number_format(($donasis->sum('jumlah') ?? 0), 0, ',', '.') }}</td>
-      </tr>
-    </tfoot>
-  </table>
-</div>
+      <div class="tabel-donatur">
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Donatur</th>
+              <th>Tanggal</th>
+              <th>Jumlah Donasi</th>
+              <th>Metode</th>
+            </tr>
+          </thead>
+          <tbody>
+            @forelse ($donasis as $i => $donasi)
+              <tr>
+                <td>{{ $i + 1 }}</td>
+                <td>{{ $donasi->nama }}</td>
+                <td>{{ \Carbon\Carbon::parse($donasi->tanggal)->format('d M Y') }}</td>
+                <td>Rp{{ number_format($donasi->jumlah, 0, ',', '.') }}</td>
+                <td>{{ $donasi->metode }}</td>
+              </tr>
+            @empty
+              <tr>
+                <td colspan="5">Belum ada data donasi.</td>
+              </tr>
+            @endforelse
+          </tbody>
+          <tfoot>
+            <tr style="background-color: #e0f7e0; font-weight: bold;">
+              <td colspan="3" style="text-align: right;">Total Donasi</td>
+              <td colspan="2">Rp{{ number_format(($donasis->sum('jumlah') ?? 0), 0, ',', '.') }}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
 
-
-  <!-- Script -->
   <script>
-    function toggleDropdown(event) {
-      event.stopPropagation();
-      const menu = document.getElementById("dropdownMenu");
-      menu.style.display = (menu.style.display === "block") ? "none" : "block";
-    }
-
-    function showContent(target, event) {
-      event.stopPropagation();
-      alert("Menampilkan konten: " + target);
-    }
-
-    window.addEventListener("click", function (e) {
-      const menu = document.getElementById("dropdownMenu");
-      const toggle = document.querySelector(".dropdown-toggle");
-      if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-        menu.style.display = "none";
-      }
-    });
-
     function toggleQR() {
       const metode = document.getElementById("metode").value;
       const qrSection = document.getElementById("qrDonasi");

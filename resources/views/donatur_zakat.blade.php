@@ -36,8 +36,6 @@
                     <th>Metode</th>
                     <th>Bukti</th>
                     <th>Status</th>
-                    <th>Created_at</th>
-                    <th>Updated_at</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -67,8 +65,7 @@
                                 <span class="badge bg-danger">Ditolak</span>
                             @endif
                         </td>
-                        <td>{{ $donatur->created_at->format('d/m/Y H:i') }}</td>
-                        <td>{{ $donatur->updated_at->format('d/m/Y H:i') }}</td>
+                       
                         <td>
                             @if($donatur->status == 'pending')
                                 <a href="{{ route('donatur.approve', $donatur->id) }}" class="btn btn-tambah">Approve</a>
