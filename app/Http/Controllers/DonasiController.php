@@ -6,6 +6,16 @@ use App\Models\Donasi;
 
 class DonasiController extends Controller
 {
+    public function index()
+{
+    // Ambil hanya donasi yang sudah diapprove
+    $donasis = Donasi::where('status', 'selesai')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('donasi', compact('donasis'));
+}
+
     public function create()
     {
         // Ambil semua data donasi dari database

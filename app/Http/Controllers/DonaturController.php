@@ -14,14 +14,14 @@ class DonaturController extends Controller
         return view('donatur', compact('donatur'));
     }
 
-    public function approve($id)
-    {
-        $donasi = Donasi::findOrFail($id);
-        $donasi->status = 'selesai';
-        $donasi->save();
+   public function approve($id)
+{
+    $donasi = Donasi::findOrFail($id);
+    $donasi->status = 'selesai';
+    $donasi->save();
 
-        return redirect()->back()->with('success', 'Donasi berhasil di-approve.');
-    }
+    return redirect()->back()->with('success', 'Donasi berhasil di-approve.');
+}
 
     public function reject($id)
     {

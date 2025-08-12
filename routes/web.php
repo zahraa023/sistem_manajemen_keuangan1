@@ -95,3 +95,6 @@ Route::get('/donatur', [DonaturController::class, 'index'])->name('donatur.index
 Route::put('/donatur/{id}/approve', [DonaturController::class, 'approve'])->name('donatur.approve');
 Route::put('/donatur/{id}/reject', [DonaturController::class, 'reject'])->name('donatur.reject');
 Route::delete('/donatur/{id}', [DonaturController::class, 'destroy'])->name('donatur.destroy');
+
+Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
+Route::put('/donatur/{id}/approve', [DonaturController::class, 'approve'])->name('donatur.approve');
