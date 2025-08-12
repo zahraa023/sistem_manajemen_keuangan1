@@ -34,7 +34,7 @@ Route::view('/donatur', 'admin.donatur');
 Route::view('/welcome', 'welcome');
 Route::view('/akun', 'akun');
 Route::view('/kellanding', 'admin.kellanding');
-
+Route::view('/laporanadmin', 'admin.laporanadmin');
 // Jadwal Shalat
 Route::get('/jadwal', [JadwalShalatController::class, 'showJadwal']);
 

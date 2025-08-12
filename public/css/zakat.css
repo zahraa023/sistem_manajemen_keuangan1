@@ -215,6 +215,62 @@ table {
   border-collapse: collapse;
 }
 
+/* Bungkus tabel donatur */
+.tabel-donatur {
+  width: 100%;
+  max-width: 800px;
+  margin: 30px auto;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding: 15px;
+}
+
+/* Tabel umum */
+.tabel-donatur table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+/* Header tabel */
+.tabel-donatur thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.tabel-donatur th, 
+.tabel-donatur td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+/* Baris genap */
+.tabel-donatur tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Efek hover */
+.tabel-donatur tbody tr:hover {
+  background-color: #f1f8f1;
+}
+
+/* Footer total */
+.tabel-donatur tfoot {
+  background-color: #e0f7e0;
+  font-weight: bold;
+}
+
+.tabel-donatur .total-label {
+  text-align: right;
+}
+
+.tabel-donatur .total-amount {
+  text-align: left;
+}
+
+
 /* Bagian header tabel */
 table thead {
   background: #4CAF50;
