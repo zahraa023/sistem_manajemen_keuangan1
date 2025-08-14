@@ -117,7 +117,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('aut
 Route::put('/user/{id}/update-password', [AdminUserController::class, 'updatePassword'])
     ->name('user.updatePassword');
 
-
 Route::get('/laporanadmin', [LaporanKeuanganController::class, 'index'])->name('laporan.index');
 Route::post('/laporanadmin', [LaporanKeuanganController::class, 'store'])->name('laporan.store');
 

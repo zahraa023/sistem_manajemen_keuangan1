@@ -6,6 +6,7 @@
   <title>Dashboard Admin</title>
   <link href="{{ asset('css/dash.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     #popupPassword {
       display: none;
@@ -41,6 +42,13 @@
 </head>
 <body>
 
+  {{-- Pesan sukses --}}
+  @if(session('success'))
+    <div style="background:#d4edda; color:#155724; padding:10px; margin:10px 0; border-radius:4px;">
+      {{ session('success') }}
+    </div>
+  @endif
+
   <div class="header" style="background-color:#2f2f2f; color:white; padding:15px; font-weight:bold; text-align:center; position:relative;">
     MASJID JAMI' (SURAU GADANG) SIDANG SEBUAH BALAI
     <a class="logout-button" href="/login" title="Kembali ke landingpage" style="position:absolute; right:20px; top:50%; transform:translateY(-50%); background-color:#e74c3c; color:white; border:none; padding:8px 14px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">
@@ -67,6 +75,7 @@
 
       <h2 style="margin-top:40px;">Data User</h2>
       <input type="text" id="searchUser" onkeyup="filterUser()" placeholder="Cari..." style="margin-top:10px; padding:8px; width:100%; max-width:300px;">
+
       <table id="userTable" border="1" cellspacing="0" cellpadding="5" style="width:100%; margin-top:10px; border-collapse:collapse;">
         <thead>
           <tr style="background-color:#f0f0f0;">
@@ -94,21 +103,22 @@
     </div>
   </div>
 
+  {{-- Popup Edit Password --}}
   <div id="popupPassword">
     <div class="popup-content">
       <h3>Edit Password User</h3>
       <form id="formEditPassword" method="POST" action="">
-    @csrf
-    @method('PUT')
+        @csrf
+        @method('PUT')
 
-    <label>Password Baru</label>
-    <input type="password" name="password" required>
-    <div class="popup-footer">
-        <button type="submit">Simpan</button>
-        <button type="button" onclick="tutupPopupPassword()">Batal</button>
-    </div>
-</form>
+        <label>Password Baru</label>
+        <input type="password" name="password" required minlength="6">
 
+        <div class="popup-footer">
+          <button type="submit">Simpan</button>
+          <button type="button" onclick="tutupPopupPassword()">Batal</button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -124,14 +134,12 @@
       });
     }
 
-  function bukaPopupPassword(userId, userName) {
-    const form = document.getElementById('formEditPassword');
-    form.action = `/user/${userId}/update-password`;
-    form.reset();
-    document.getElementById('popupPassword').style.display = 'flex';
-}
-
-
+    function bukaPopupPassword(userId, userName) {
+      const form = document.getElementById('formEditPassword');
+      form.action = `/user/${userId}/update-password`;
+      form.querySelector('input[name="password"]').value = '';
+      document.getElementById('popupPassword').style.display = 'flex';
+    }
 
     function tutupPopupPassword() {
       document.getElementById('popupPassword').style.display = 'none';
