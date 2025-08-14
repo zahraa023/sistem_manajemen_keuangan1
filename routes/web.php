@@ -12,6 +12,7 @@ use App\Http\Controllers\DonaturZakatController;
 use App\Http\Controllers\ZakatController;
 use App\Http\Controllers\KelompokDonasiController;
 use App\Http\Controllers\DonaturController;
+use App\Http\Controllers\AkunController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,3 +99,9 @@ Route::delete('/donatur/{id}', [DonaturController::class, 'destroy'])->name('don
 
 Route::get('/donasi', [DonasiController::class, 'index'])->name('donasi.index');
 Route::put('/donatur/{id}/approve', [DonaturController::class, 'approve'])->name('donatur.approve');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
+    Route::put('/akun', [AkunController::class, 'update'])->name('akun.update');
+    Route::delete('/akun', [AkunController::class, 'destroy'])->name('akun.destroy');
+});

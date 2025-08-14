@@ -24,7 +24,6 @@
     <div class="sidebar" style="background-color:#2f2f2f; width:200px; display:flex; flex-direction:column; padding-top:10px;">
       <button class="active" onclick="showContent('dashboard', event)">Dashboard Admin</button>
       <button onclick="window.location.href='/kellanding'">Kelola Landing Page</button>
-      <button onclick="window.location.href='/keldonasi'">Kelompok Donasi</button>
     </div>
 
     <!-- MAIN CONTENT -->

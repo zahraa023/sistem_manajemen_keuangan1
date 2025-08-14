@@ -25,33 +25,7 @@
     <!-- JUDUL -->
     <div class="page-title">LAPORAN KEUANGAN</div>
 
-    <!-- KARTU -->
-    <div class="summary-cards">
-      <div class="card green">
-        <h4>Saldo </h4>
-        <small>Kamis, 1 Mei 2025</small>
-        <div class="amount">Rp 101,25 jt</div>
-        <div class="card-icon"><i class="fas fa-wallet"></i></div>
-      </div>
-      <div class="card green">
-        <h4>Pemasukan</h4>
-        <small>Sabtu, 31 Mei 2025</small>
-        <div class="amount">Rp 24,64 jt</div>
-        <div class="card-icon"><i class="fas fa-arrow-left"></i></div>
-      </div>
-      <div class="card red">
-        <h4>Pengeluaran</h4>
-        <small>Sabtu, 31 Mei 2025</small>
-        <div class="amount">Rp 48,04 jt</div>
-        <div class="card-icon"><i class="fas fa-arrow-up-right-from-square"></i></div>
-      </div>
-      <div class="card blue">
-        <h4>Saldo Akhir</h4>
-        <small>Sabtu, 31 Mei 2025</small>
-        <div class="amount">Rp 77,85 jt</div>
-        <div class="card-icon"><i class="fas fa-wallet"></i></div>
-      </div>
-    </div>
+    
 <!-- === FORM FILTER BULAN === -->
 <div style="margin-bottom: 20px; text-align: left; padding-left: 40px;">
   <label for="bulanFilter" style="font-weight: bold; margin-right: 10px;">Pilih Bulan</label>

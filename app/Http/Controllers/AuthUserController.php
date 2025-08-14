@@ -43,4 +43,6 @@ class AuthUserController extends Controller
             'email' => 'Email atau password salah.',
         ]);
     }
+
+    
 }
