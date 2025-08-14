@@ -21,9 +21,6 @@
 
   <!-- Tombol akun di kanan header -->
   <div class="header-right">
-    <span class="akun-text">Akun</span>
-    <button class="akun-button" onclick="window.location.href='/akun'">
-      <i class="fas fa-user"></i>
     </button>
   </div>
 </div>

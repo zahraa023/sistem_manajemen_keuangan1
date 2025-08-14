@@ -97,16 +97,18 @@
   <div id="popupPassword">
     <div class="popup-content">
       <h3>Edit Password User</h3>
-      <form id="formEditPassword" method="POST">
-        @csrf
-        @method('PUT')
-        <label>Password Baru</label>
-        <input type="password" name="password" required>
-        <div class="popup-footer">
-          <button type="submit">Simpan</button>
-          <button type="button" onclick="tutupPopupPassword()">Batal</button>
-        </div>
-      </form>
+      <form id="formEditPassword" method="POST" action="">
+    @csrf
+    @method('PUT')
+
+    <label>Password Baru</label>
+    <input type="password" name="password" required>
+    <div class="popup-footer">
+        <button type="submit">Simpan</button>
+        <button type="button" onclick="tutupPopupPassword()">Batal</button>
+    </div>
+</form>
+
     </div>
   </div>
 
@@ -122,11 +124,14 @@
       });
     }
 
-    function bukaPopupPassword(userId, userName) {
-      const form = document.getElementById('formEditPassword');
-      form.action = `/user/${userId}/update-password`;
-      document.getElementById('popupPassword').style.display = 'flex';
-    }
+  function bukaPopupPassword(userId, userName) {
+    const form = document.getElementById('formEditPassword');
+    form.action = `/user/${userId}/update-password`;
+    form.reset();
+    document.getElementById('popupPassword').style.display = 'flex';
+}
+
+
 
     function tutupPopupPassword() {
       document.getElementById('popupPassword').style.display = 'none';

@@ -58,26 +58,6 @@ html, body {
   background-color: #388e3c;
 }
 
-.akun-text {
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.akun-button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.akun-button:hover {
-  background-color: #388e3c;
-}
-
 /* ========== LAYOUT ========== */
 .layout {
   display: flex;

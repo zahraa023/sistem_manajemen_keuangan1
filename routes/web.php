@@ -14,7 +14,9 @@ use App\Http\Controllers\KelompokDonasiController;
 use App\Http\Controllers\DonaturController;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AdminUserController;
-
+use App\Http\Controllers\LaporanKeuanganController;
+use App\Http\Controllers\TransaksiController;
+use App\Models\Transaksi;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -84,17 +86,20 @@ Route::get('/donatur_zakat/reject/{id}', [DonaturZakatController::class, 'reject
 Route::delete('/donatur_zakat/delete/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur.delete');
 
 
-Route::get('/keldonasi', [KelompokDonasiController::class, 'index'])->name('kelompok-donasi.index');
-Route::post('/keldonasi', [KelompokDonasiController::class, 'store'])->name('kelompok-donasi.store');
-Route::get('/keldonasi/{id}/edit', [KelompokDonasiController::class, 'edit'])->name('kelompok-donasi.edit');
-Route::put('/keldonasi/{id}', [KelompokDonasiController::class, 'update'])->name('kelompok-donasi.update');
-Route::delete('/keldonasi/{id}', [KelompokDonasiController::class, 'destroy'])->name('kelompok-donasi.destroy');
+// Donatur Zakat
+Route::get('/donatur_zakat', [DonaturZakatController::class, 'index'])->name('donatur_zakat.index');
+Route::post('/donatur_zakat', [DonaturZakatController::class, 'store'])->name('donatur_zakat.store');
+Route::put('/donatur_zakat/approve/{id}', [DonaturZakatController::class, 'approve'])->name('donatur_zakat.approve');
+Route::put('/donatur_zakat/reject/{id}', [DonaturZakatController::class, 'reject'])->name('donatur_zakat.reject');
+Route::delete('/donatur_zakat/{id}', [DonaturZakatController::class, 'destroy'])->name('donatur_zakat.destroy');
+
 
 // Halaman Donatur
 Route::get('/donatur', [DonaturController::class, 'index'])->name('donatur.index');
 
 Route::get('/donatur', [DonaturController::class, 'index'])->name('donatur.index');
-Route::put('/donatur/{id}/approve', [DonaturController::class, 'approve'])->name('donatur.approve');
+Route::get('/donatur/{id}/approve', [DonaturController::class, 'approve']);
+
 Route::put('/donatur/{id}/reject', [DonaturController::class, 'reject'])->name('donatur.reject');
 Route::delete('/donatur/{id}', [DonaturController::class, 'destroy'])->name('donatur.destroy');
 
@@ -109,4 +114,17 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
 
-Route::put('/user/{id}/update-password', [AdminUserController::class, 'updatePassword'])->name('user.update-password');
+Route::put('/user/{id}/update-password', [AdminUserController::class, 'updatePassword'])
+    ->name('user.updatePassword');
+
+
+Route::get('/laporanadmin', [LaporanKeuanganController::class, 'index'])->name('laporan.index');
+Route::post('/laporanadmin', [LaporanKeuanganController::class, 'store'])->name('laporan.store');
+
+Route::get('/laporanadmin', function() {
+    $transaksis = \App\Models\Transaksi::orderBy('created_at', 'desc')->get();
+    return view('laporanadmin', compact('transaksis'));
+})->name('laporanadmin');
+
+Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
+Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');

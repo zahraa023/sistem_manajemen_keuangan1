@@ -57,26 +57,44 @@
                             @endif
                         </td>
                         <td>
-                            @if($donatur->status == 'pending')
-                                <span class="badge bg-warning text-dark">Pending</span>
-                            @elseif($donatur->status == 'selesai')
-                                <span class="badge bg-success">Selesai</span>
-                            @elseif($donatur->status == 'ditolak')
-                                <span class="badge bg-danger">Ditolak</span>
-                            @endif
-                        </td>
-                       
-                        <td>
-                            @if($donatur->status == 'pending')
-                                <a href="{{ route('donatur.approve', $donatur->id) }}" class="btn btn-tambah">Approve</a>
-                                <a href="{{ route('donatur.reject', $donatur->id) }}" class="btn btn-tambah" style="background:#e74c3c; color:#fff;">Tolak</a>
-                            @endif
-                            <form action="{{ route('donatur.delete', $donatur->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="hapus-btn" onclick="return confirm('Yakin ingin hapus?')">Hapus</button>
-                            </form>
-                        </td>
+    @if($donatur->status == 'pending')
+        <span class="badge" >
+            Pending
+        </span>
+    @elseif($donatur->status == 'selesai')
+        <span class="badge">
+            Selesai
+        </span>
+    @elseif($donatur->status == 'ditolak')
+        <span class="badge">
+            Ditolak
+        </span>
+    @endif
+</td>
+<td>
+    @if($donatur->status == 'pending')
+        {{-- Approve --}}
+        <form action="{{ route('donatur_zakat.approve', $donatur->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('PUT')
+            <button type="submit" class="btn btn-tambah">Approve</button>
+        </form>
+
+        {{-- Tolak --}}
+        <form action="{{ route('donatur_zakat.reject', $donatur->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('PUT')
+            <button type="submit" class="btn btn-tambah" style="background:#e74c3c; color:#fff;">Tolak</button>
+        </form>
+    @endif
+
+    {{-- Hapus --}}
+    <form action="{{ route('donatur_zakat.destroy', $donatur->id) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="hapus-btn" onclick="return confirm('Yakin ingin hapus?')">Hapus</button>
+    </form>
+</td>
                     </tr>
                 @empty
                     <tr>

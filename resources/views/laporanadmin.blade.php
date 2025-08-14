@@ -21,6 +21,18 @@
 
     <div class="transactions">
       <h4>Daftar Transaksi</h4>
+
+      <!-- Filter Waktu -->
+      <form method="GET" action="{{ route('laporanadmin') }}">
+        <label for="filter">Filter:</label>
+        <select name="filter" id="filter" onchange="this.form.submit()">
+          <option value="">Semua</option>
+          <option value="minggu" {{ request('filter') === 'minggu' ? 'selected' : '' }}>Minggu Ini</option>
+          <option value="bulan" {{ request('filter') === 'bulan' ? 'selected' : '' }}>Bulan Ini</option>
+          <option value="tahun" {{ request('filter') === 'tahun' ? 'selected' : '' }}>Tahun Ini</option>
+        </select>
+      </form>
+
       <button class="btn-tambah" onclick="tambahBaris()">+ Tambah Data</button>
       <table class="transaction-table">
         <thead>
@@ -40,7 +52,7 @@
             <td>{{ $t->nama_transaksi }}</td>
             <td class="amount-green">{{ $t->pemasukan ? 'Rp ' . number_format($t->pemasukan,0,',','.') : '' }}</td>
             <td class="amount-red">{{ $t->pengeluaran ? 'Rp ' . number_format($t->pengeluaran,0,',','.') : '' }}</td>
-            <td>{{ $t->created_at->format('d M Y H:i') }}</td>
+            <td>{{ date('d M Y H:i', strtotime($t->created_at)) }}</td>
             <td>
               <button class="btn-delete" onclick="hapusData({{ $t->id }}, this)">Hapus</button>
             </td>

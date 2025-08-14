@@ -204,7 +204,11 @@ function simpanRincian() {
     if (page === 'dashben') {
       main.innerHTML = `
         <h2>DASHBOARD BENDAHARA</h2>
-       
+        <div style="display:flex; gap:20px; margin-top:20px;">
+          <div class="dashboard-card">
+            <h3><i class="fa fa-hand-holding-heart" style="color:#4CAF50;"></i> Jumlah Donatur</h3>
+            <p>15 Orang</p>
+          </div>
         </div>
       `;
     }
