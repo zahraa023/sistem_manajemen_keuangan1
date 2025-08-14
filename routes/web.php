@@ -128,3 +128,7 @@ Route::get('/laporanadmin', function() {
 
 Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaksi.store');
 Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
+Route::put('/transaksi/{id}', [TransaksiController::class, 'update'])->name('transaksi.update');
+
+
+
