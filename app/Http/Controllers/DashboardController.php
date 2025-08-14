@@ -3,90 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Donasi;
-use App\Models\Kampanye;
-use App\Models\Galeri;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
-    public function storeDonatur(Request $request)
+    public function index()
     {
-        $validated = $request->validate([
-            'nama'    => 'required|string|max:255',
-            'tanggal' => 'required|date',
-            'jumlah'  => 'required|numeric',
-            'metode'  => 'nullable|string|max:100',
-            'bukti'   => 'nullable|image|max:2048',
-            'status'  => 'nullable|string|max:50',
-            'jenis'   => 'required|string|in:masjid,karpet', // ✅ Tambahkan jenis donasi
-        ]);
-
-        if ($request->hasFile('bukti')) {
-            $validated['bukti'] = $request->file('bukti')->store('bukti_donasi', 'public');
-        }
-
-        Donasi::create($validated);
-
-        $donatur = Donasi::orderBy('created_at', 'desc')->get();
-
-        return view('admin.donatur', compact('donatur'));
-    }
-
-    public function donatur()
-    {
-        $donatur = Donasi::orderBy('created_at', 'desc')->get();
-        return view('admin.donatur', compact('donatur'));
-    }
-
-    public function approve($id)
-    {
-        $donasi = Donasi::findOrFail($id);
-        $donasi->status = 'selesai';
-        $donasi->save();
-
-        return redirect()->back()->with('success', 'Donasi telah di-approve.');
-    }
-
-    public function destroy($id)
-    {
-        $donasi = Donasi::findOrFail($id);
-        $donasi->delete();
-
-        return redirect()->back()->with('success', 'Donatur berhasil dihapus.');
-    }
-
-    // ✅ Tampilkan kelompok donasi
-    public function keldonasi()
-    {
-        $donasiMasjid = Donasi::where('jenis', 'masjid')->orderBy('tanggal', 'desc')->get();
-        $donasiKarpet = Donasi::where('jenis', 'karpet')->orderBy('tanggal', 'desc')->get();
-        $kampanye = Kampanye::first(); // Ambil target & hari tersisa
-
-        return view('admin.keldonasi', compact('donasiMasjid', 'donasiKarpet', 'kampanye'));
-    }
-
-    // ✅ Simpan perubahan kampanye
-    public function updateKampanye(Request $request)
-    {
-        $kampanye = Kampanye::first(); // Ambil baris pertama, atau buat baru
-        if (!$kampanye) {
-            $kampanye = new Kampanye();
-        }
-
-        $kampanye->target = $request->target;
-        $kampanye->hari_tersisa = $request->hari_tersisa;
-        $kampanye->save();
-
-        if ($request->hasFile('galeri')) {
-            foreach ($request->file('galeri') as $file) {
-                $path = $file->store('galeri', 'public');
-                Galeri::create([
-                    'kampanye_id' => $kampanye->id,
-                    'gambar' => $path
-                ]);
-            }
-        }
-
-        return redirect()->back()->with('success', 'Kampanye berhasil diperbarui.');
+        $users = User::all(); // ambil semua user
+        return view('admin.dashboard', compact('users'));
     }
 }

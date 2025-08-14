@@ -13,6 +13,7 @@ use App\Http\Controllers\ZakatController;
 use App\Http\Controllers\KelompokDonasiController;
 use App\Http\Controllers\DonaturController;
 use App\Http\Controllers\AkunController;
+use App\Http\Controllers\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,3 +106,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/akun', [AkunController::class, 'update'])->name('akun.update');
     Route::delete('/akun', [AkunController::class, 'destroy'])->name('akun.destroy');
 });
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+
+Route::put('/user/{id}/update-password', [AdminUserController::class, 'updatePassword'])->name('user.update-password');
