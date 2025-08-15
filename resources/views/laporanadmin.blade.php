@@ -9,14 +9,131 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <!-- Tambahkan library jsPDF dan autoTable -->
+  <!-- jsPDF & autoTable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+   <style>
+  /* Container utama daftar transaksi + filter + tombol tambah */
+  .transactions {
+    display: flex;
+    justify-content: space-between; /* Filter di kiri, tombol tambah di kanan */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  /* Filter */
+  .transactions form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .transactions label {
+    font-weight: bold;
+  }
+  .transactions select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  /* Tombol tambah */
+  .btn-tambah {
+    padding: 6px 12px;
+    background: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn-tambah:hover {
+    background: #45a049;
+  }
+
+  /* Modal form */
+  #formModal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  .modal-content {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .modal-content label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  .modal-content input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .modal-content button {
+    margin-top: 12px;
+  }
+
+  /* Hapus panah input number */
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+  input[type=number] {
+      -moz-appearance: textfield; /* Firefox */
+  }
+
+  /* Tabel */
+  .transaction-table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  .transaction-table th, .transaction-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  .transaction-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+
+  /* Tombol PDF */
+  .pdf-buttons {
+    width: 80%;
+    margin: 10px auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+</style>
+
 </head>
 <body>
 
   <div class="header">
     <i class="fas fa-user-shield"></i> ADMIN - LAPORAN KEUANGAN
+  </div>
+
+  <!-- TOMBOL BACK -->
+  <div class="circle-back-wrapper">
+    <a href="/dashben" class="circle-back-button" title="Kembali ke Beranda">
+      <i class="fas fa-arrow-left"></i>
+    </a>
   </div>
 
   <div class="container">
@@ -30,63 +147,14 @@
         <label for="filter">Filter:</label>
         <select name="filter" id="filter" onchange="this.form.submit()">
           <option value="">Semua</option>
-          <option value="minggu" {{ request('filter') === 'minggu' ? 'selected' : '' }}>Minggu Ini</option>
-          <option value="bulan" {{ request('filter') === 'bulan' ? 'selected' : '' }}>Bulan Ini</option>
-          <option value="tahun" {{ request('filter') === 'tahun' ? 'selected' : '' }}>Tahun Ini</option>
+          <option value="minggu" {{ request('filter') === 'minggu' ? 'selected' : '' }}>Input Per Minggu </option>
+          <option value="bulan" {{ request('filter') === 'bulan' ? 'selected' : '' }}>Input PerBulan </option>
+          <option value="tahun" {{ request('filter') === 'tahun' ? 'selected' : '' }}>Input Per Tahun</option>
         </select>
       </form>
 
-      <!-- Tombol cetak PDF (hanya muncul sesuai filter) -->
-      <div style="margin: 10px 0;">
-        <button id="btnMinggu" onclick="cetakPDF('minggu')" class="btn-tambah" style="display:none;">
-          <i class="fa fa-file-pdf"></i> Cetak PDF Minggu Ini
-        </button>
-        <button id="btnBulan" onclick="cetakPDF('bulan')" class="btn-tambah" style="display:none;">
-          <i class="fa fa-file-pdf"></i> Cetak PDF Bulan Ini
-        </button>
-        <button id="btnTahun" onclick="cetakPDF('tahun')" class="btn-tambah" style="display:none;">
-          <i class="fa fa-file-pdf"></i> Cetak PDF Tahun Ini
-        </button>
-      </div>
-
       <!-- Tombol tambah -->
       <button class="btn-tambah" onclick="openForm()">+ Tambah Data</button>
-
-      <!-- Judul filter otomatis -->
-      <h3 id="judulFilter" style="margin-top: 10px; color: #333;">
-        {{ $judul ?? '' }}
-      </h3>
-
-      <!-- Tabel -->
-      <table class="transaction-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nama Transaksi</th>
-            <th>Pemasukan</th>
-            <th>Pengeluaran</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach($transaksis as $index => $t)
-            <tr data-id="{{ $t->id }}">
-              <td>{{ $index + 1 }}</td>
-              <td>{{ $t->nama_transaksi }}</td>
-              <td class="amount-green">
-                {{ $t->pemasukan ? 'Rp ' . number_format($t->pemasukan,0,',','.') : '' }}
-              </td>
-              <td class="amount-red">
-                {{ $t->pengeluaran ? 'Rp ' . number_format($t->pengeluaran,0,',','.') : '' }}
-              </td>
-              <td>
-                <button class="btn-edit" onclick="editData({{ $t->id }}, '{{ $t->nama_transaksi }}', '{{ $t->pemasukan }}', '{{ $t->pengeluaran }}')">Edit</button>
-                <button class="btn-delete" onclick="hapusData({{ $t->id }}, this)">Hapus</button>
-              </td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
     </div>
   </div>
 
@@ -110,6 +178,106 @@
       </form>
     </div>
   </div>
+
+  <!-- Tombol cetak PDF (posisi kanan) -->
+  <div class="pdf-buttons">
+    <button id="btnMinggu" onclick="cetakPDF('minggu')" class="btn-tambah" style="display:none;">
+      <i class="fa fa-file-pdf"></i> Cetak PDF Per Minggu 
+    </button>
+    <button id="btnBulan" onclick="cetakPDF('bulan')" class="btn-tambah" style="display:none;">
+      <i class="fa fa-file-pdf"></i> Cetak PDF Per Bulan 
+    </button>
+    <button id="btnTahun" onclick="cetakPDF('tahun')" class="btn-tambah" style="display:none;">
+      <i class="fa fa-file-pdf"></i> Cetak PDF Per Tahun 
+    </button>
+  </div>
+
+  <!-- Judul filter otomatis -->
+  <h3 id="judulFilter" style="margin-top: 10px; color: #333; text-align:center;">
+    {{ $judul ?? '' }}
+  </h3>
+
+  <!-- Tabel -->
+  <table class="transaction-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nama Transaksi</th>
+        <th>Pemasukan</th>
+        <th>Pengeluaran</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+     @php
+    $mingguSekarang = null;
+    $bulanSekarang = null;
+    $tahunSekarang = null;
+    $namaBulanList = [
+        1=>'Januari', 2=>'Februari', 3=>'Maret', 4=>'April', 5=>'Mei', 6=>'Juni',
+        7=>'Juli', 8=>'Agustus', 9=>'September', 10=>'Oktober', 11=>'November', 12=>'Desember'
+    ];
+@endphp
+@foreach($transaksis as $index => $t)
+    @php
+        $timestamp = strtotime($t->created_at);
+        $tahun = date('Y', $timestamp);
+        $bulan = date('n', $timestamp);
+        $hari = (int) date('j', $timestamp);
+        $mingguKe = ceil($hari / 7);
+
+        // Untuk Tahun
+        if ($tahunSekarang !== $tahun && request('filter') === 'tahun') {
+            $tahunSekarang = $tahun;
+            echo "<tr>
+                    <td colspan='5' style='background:#ccc;font-weight:bold;text-align:center'>
+                        Tahun {$tahunSekarang}
+                    </td>
+                  </tr>";
+        }
+
+        // Untuk Bulan (baik saat filter bulan atau tahun)
+        if ($bulanSekarang !== $bulan && (request('filter') === 'bulan' || request('filter') === 'tahun')) {
+            $bulanSekarang = $bulan;
+            $namaBulan = $namaBulanList[$bulan];
+            echo "<tr>
+                    <td colspan='5' style='background:#ddd;font-weight:bold;text-align:center'>
+                        {$namaBulan} {$tahun}
+                    </td>
+                  </tr>";
+        }
+
+        // Untuk Minggu
+        if ($mingguSekarang !== $mingguKe && request('filter') === 'minggu') {
+            $mingguSekarang = $mingguKe;
+            $awal = ($mingguKe - 1) * 7 + 1;
+            $akhir = min($awal + 6, cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun));
+            $namaBulan = $namaBulanList[$bulan];
+            echo "<tr>
+                    <td colspan='5' style='background:#eee;font-weight:bold;text-align:center'>
+                        Minggu {$mingguKe} ({$awal}-{$akhir} {$namaBulan} {$tahun})
+                    </td>
+                  </tr>";
+        }
+    @endphp
+    <tr data-id="{{ $t->id }}">
+        <td>{{ $index + 1 }}</td>
+        <td>{{ $t->nama_transaksi }}</td>
+        <td class="amount-green">
+            {{ $t->pemasukan ? 'Rp ' . number_format($t->pemasukan,0,',','.') : '' }}
+        </td>
+        <td class="amount-red">
+            {{ $t->pengeluaran ? 'Rp ' . number_format($t->pengeluaran,0,',','.') : '' }}
+        </td>
+        <td>
+            <button class="btn-edit" onclick="editData({{ $t->id }}, '{{ $t->nama_transaksi }}', '{{ $t->pemasukan }}', '{{ $t->pengeluaran }}')">Edit</button>
+            <button class="btn-delete" onclick="hapusData({{ $t->id }}, this)">Hapus</button>
+        </td>
+    </tr>
+@endforeach
+
+    </tbody>
+  </table>
 
   <script>
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -185,27 +353,25 @@
       }
     }
 
-    // --- Judul otomatis sesuai filter ---
     function updateJudulFilter() {
       const filter = document.getElementById("filter").value;
       const judulElement = document.getElementById("judulFilter");
 
       switch(filter) {
         case "minggu":
-          judulElement.innerText = "Minggu Ini";
+          judulElement.innerText;
           break;
         case "bulan":
-          judulElement.innerText = "Bulan Ini";
+          judulElement.innerText;
           break;
         case "tahun":
-          judulElement.innerText = "Tahun Ini";
+          judulElement.innerText;
           break;
         default:
           judulElement.innerText = "";
       }
     }
 
-    // --- Menampilkan tombol PDF sesuai filter ---
     function updatePDFButtons() {
       const filter = document.getElementById("filter").value;
       document.getElementById("btnMinggu").style.display = (filter === "minggu") ? "inline-block" : "none";
@@ -213,48 +379,55 @@
       document.getElementById("btnTahun").style.display = (filter === "tahun") ? "inline-block" : "none";
     }
 
-    // Jalankan saat halaman dimuat
     updateJudulFilter();
     updatePDFButtons();
 
-    // Update otomatis saat filter berubah
     document.getElementById("filter").addEventListener("change", function() {
       updateJudulFilter();
       updatePDFButtons();
     });
 
-    // Fungsi cetak PDF
     function cetakPDF(jenis) {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
 
-      // Judul PDF
       let judul = '';
-      if (jenis === 'minggu') judul = 'Laporan Keuangan - Minggu Ini';
-      if (jenis === 'bulan') judul = 'Laporan Keuangan - Bulan Ini';
-      if (jenis === 'tahun') judul = 'Laporan Keuangan - Tahun Ini';
+      const bulanNama = [
+        'Januari','Februari','Maret','April','Mei','Juni',
+        'Juli','Agustus','September','Oktober','November','Desember'
+      ];
+
+      const now = new Date();
+      const tahun = now.getFullYear();
+      const bulan = bulanNama[now.getMonth()];
+
+      if (jenis === 'minggu') {
+        const mingguKe = Math.ceil(now.getDate() / 7);
+        const awal = (mingguKe - 1) * 7 + 1;
+        const akhir = Math.min(awal + 6, new Date(tahun, now.getMonth() + 1, 0).getDate());
+        judul = `Laporan Keuangan - Minggu ${mingguKe} (${awal}–${akhir} ${bulan} ${tahun})`;
+      }
+      if (jenis === 'bulan') judul = `Laporan Keuangan - Bulan ${bulan} ${tahun}`;
+      if (jenis === 'tahun') judul = `Laporan Keuangan - Tahun ${tahun}`;
 
       doc.setFontSize(14);
       doc.text(judul, 14, 15);
 
-      // Ambil data dari tabel
       const tableData = [];
       document.querySelectorAll(".transaction-table tbody tr").forEach(tr => {
         const row = [];
         tr.querySelectorAll("td").forEach((td, index) => {
           if (index < 4) row.push(td.innerText.trim());
         });
-        tableData.push(row);
+        if(row.length) tableData.push(row);
       });
 
-      // Generate tabel PDF
       doc.autoTable({
         head: [['#', 'Nama Transaksi', 'Pemasukan', 'Pengeluaran']],
         body: tableData,
         startY: 25,
       });
 
-      // Simpan file PDF
       doc.save(`${judul}.pdf`);
     }
   </script>

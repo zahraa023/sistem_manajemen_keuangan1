@@ -25,7 +25,7 @@
   <div class="container">
     <div class="page-title">LAPORAN KEUANGAN</div>
 
-    <!-- FORM FILTER BULAN -->
+    <!-- FILTER BULAN -->
     <div style="margin-bottom: 20px; text-align: left; padding-left: 40px;">
       <label for="bulanFilter" style="font-weight: bold; margin-right: 10px;">Pilih Bulan</label>
       <select id="bulanFilter" onchange="filterBulan()" style="padding: 8px 12px; border-radius: 6px; border: 1px solid #ccc;">
@@ -40,7 +40,7 @@
       </select>
     </div>
 
-    <!-- TOMBOL TAB -->
+    <!-- TABS -->
     <div class="filter-buttons">
       <button onclick="tampilkanKonten('mingguan')" id="btn-mingguan" class="active-tab">
         <i class="fas fa-file-alt"></i> PER MINGGU
@@ -48,47 +48,58 @@
       <button onclick="tampilkanKonten('bulanan')" id="btn-bulanan">
         <i class="fas fa-calendar-alt"></i> PER BULAN
       </button>
-      <button onclick="tampilkanKonten('rincian')" id="btn-rincian">
-        <i class="fas fa-info-circle"></i> RINCIAN TRANSAKSI
+      <button onclick="tampilkanKonten('tahunan')" id="btn-tahunan">
+        <i class="fas fa-info-circle"></i> PER TAHUN
       </button>
     </div>
 
-    <!-- === KONTEN MINGGUAN === -->
+    <!-- === PER MINGGU === -->
     <div class="konten" id="mingguan">
       <div class="transactions">
         @php
           $saldo = 0;
+          $mingguans = $transaksis->groupBy(function($t) {
+              return $t->created_at->format('Y') . '-' . $t->created_at->format('m') . '-M' . ceil($t->created_at->format('d') / 7);
+          })->sortKeys();
         @endphp
-        @foreach($transaksis as $t)
+
+        @foreach($mingguans as $key => $items)
           @php
-            $saldo += $t->pemasukan - $t->pengeluaran;
+            $parts = explode('-', $key);
+            $tahun = $parts[0];
+            $bulan = $parts[1];
+            $mingguKe = (int) str_replace('M', '', $parts[2]);
+
+            $awal = ($mingguKe - 1) * 7 + 1;
+            $akhir = min($awal + 6, \Carbon\Carbon::createFromDate($tahun, $bulan, 1)->endOfMonth()->day);
           @endphp
-          <h4 data-bulan="{{ $t->created_at->format('Y-m') }}">
-            {{ $t->created_at->format('d-m-Y') }}
+
+          <h4 data-bulan="{{ $tahun }}-{{ str_pad($bulan, 2, '0', STR_PAD_LEFT) }}">
+            Minggu {{ $mingguKe }} ({{ $awal }} - {{ $akhir }} {{ \Carbon\Carbon::create()->month($bulan)->locale('id')->translatedFormat('F') }} {{ $tahun }})
           </h4>
-          <table class="transaction-table" data-bulan="{{ $t->created_at->format('Y-m') }}">
+          <table class="transaction-table" data-bulan="{{ $tahun }}-{{ str_pad($bulan, 2, '0', STR_PAD_LEFT) }}">
             <thead>
               <tr><th>Transaksi</th><th>Pemasukan</th><th>Pengeluaran</th><th>Saldo</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td>{{ $t->nama_transaksi }}</td>
-                <td class="amount-green">{{ $t->pemasukan ? 'Rp '.number_format($t->pemasukan,0,',','.') : '' }}</td>
-                <td class="amount-red">{{ $t->pengeluaran ? 'Rp '.number_format($t->pengeluaran,0,',','.') : '' }}</td>
-                <td class="amount-bold">{{ 'Rp '.number_format($saldo,0,',','.') }}</td>
-              </tr>
+              @foreach($items as $t)
+                @php $saldo += $t->pemasukan - $t->pengeluaran; @endphp
+                <tr>
+                  <td>{{ $t->nama_transaksi }}</td>
+                  <td class="amount-green">{{ $t->pemasukan ? 'Rp '.number_format($t->pemasukan,0,',','.') : '' }}</td>
+                  <td class="amount-red">{{ $t->pengeluaran ? 'Rp '.number_format($t->pengeluaran,0,',','.') : '' }}</td>
+                  <td class="amount-bold">{{ 'Rp '.number_format($saldo,0,',','.') }}</td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
         @endforeach
       </div>
     </div>
 
-    <!-- === KONTEN BULANAN === -->
+    <!-- === PER BULAN === -->
     <div class="konten" id="bulanan" style="display:none;">
       <div class="transactions">
-        @php
-          $saldoBulanan = [];
-        @endphp
         @foreach($transaksis->groupBy(fn($t) => $t->created_at->format('Y-m')) as $bln => $trans)
           <div data-bulan="{{ $bln }}">
             <h4>Laporan Bulanan: {{ date('F Y', strtotime($bln.'-01')) }}</h4>
@@ -115,33 +126,29 @@
       </div>
     </div>
 
-    <!-- === KONTEN RINCIAN === -->
-    <div class="konten" id="rincian" style="display:none;">
+    <!-- === PER TAHUN === -->
+    <div class="konten" id="tahunan" style="display:none;">
       <div class="transactions">
-        @foreach($transaksis as $t)
-          <div data-bulan="{{ $t->created_at->format('Y-m') }}">
-            <h4>{{ $t->created_at->format('d-m-Y') }}</h4>
-            <table class="transaction-table">
-              <thead>
+        @foreach($transaksis->groupBy(fn($t) => $t->created_at->format('Y')) as $thn => $trans)
+          <h4 data-bulan="{{ $thn }}">Tahun {{ $thn }}</h4>
+          <table class="transaction-table">
+            <thead>
+              <tr><th>#</th><th>Transaksi</th><th>Pemasukan</th><th>Pengeluaran</th><th>Saldo</th></tr>
+            </thead>
+            <tbody>
+              @php $saldo = 0; @endphp
+              @foreach($trans as $i => $t)
+                @php $saldo += $t->pemasukan - $t->pengeluaran; @endphp
                 <tr>
-                  <th>Tanggal</th>
-                  <th>Transaksi</th>
-                  <th>Pemasukan</th>
-                  <th>Pengeluaran</th>
-                  <th>Saldo</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{ $t->created_at->format('d-m-Y') }}</td>
+                  <td>{{ $i + 1 }}</td>
                   <td>{{ $t->nama_transaksi }}</td>
                   <td>{{ $t->pemasukan ? 'Rp '.number_format($t->pemasukan,0,',','.') : '' }}</td>
                   <td>{{ $t->pengeluaran ? 'Rp '.number_format($t->pengeluaran,0,',','.') : '' }}</td>
-                  <td>{{ 'Rp '.number_format($t->pemasukan - $t->pengeluaran,0,',','.') }}</td>
+                  <td>{{ 'Rp '.number_format($saldo,0,',','.') }}</td>
                 </tr>
-              </tbody>
-            </table>
-          </div>
+              @endforeach
+            </tbody>
+          </table>
         @endforeach
       </div>
     </div>

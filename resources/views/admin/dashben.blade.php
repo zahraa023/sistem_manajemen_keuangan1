@@ -36,7 +36,7 @@
       <button onclick="showContent('rincian', event)">Rincian Transaksi</button>
       
     </div> -->
-     <button onclick="window.location.href='/laporan'">Laporan</button>
+     <button onclick="window.location.href='/laporanadmin'">Kelola Laporan</button>
 
   </div>
 
