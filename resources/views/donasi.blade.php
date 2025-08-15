@@ -85,13 +85,13 @@
               <option value="QR" {{ old('metode') == 'QR' ? 'selected' : '' }}>Qris</option>
             </select>
 
-            <div id="qrDonasi" class="qr-box" style="display: {{ old('metode') == 'QR' ? 'block' : 'none' }};">
+            <div id="qrDonasi" class="qr-box" style="opacity: {{ old('metode') == 'QR' ? '1' : '0' }}; max-height: {{ old('metode') == 'QR' ? '500px' : '0' }};">
               <h3>Scan Qris untuk Donasi</h3>
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Donasi+Masjid+Jami" alt="QR Code">
+              <img src="{{ asset('asset/Qris.png') }}" alt="QR Code" width="200" height="200">
               <p>Silakan scan menggunakan aplikasi e-wallet Anda</p>
             </div>
 
-            <div id="buktiTransferContainer" style="display: {{ old('metode') == 'QR' ? 'block' : 'none' }}; margin-top: 10px;">
+            <div id="buktiTransferContainer" style="opacity: {{ old('metode') == 'QR' ? '1' : '0' }}; max-height: {{ old('metode') == 'QR' ? '200px' : '0' }}; overflow: hidden;">
               <label>Upload Bukti Transfer</label>
               <input type="file" name="bukti" id="buktiTransfer" accept="image/*" style="width: 100%; margin-top: 5px;">
             </div>
@@ -147,14 +147,22 @@
       const qrSection = document.getElementById("qrDonasi");
       const buktiTransfer = document.getElementById("buktiTransferContainer");
 
-      if (metode === "QR") {
-        qrSection.style.display = "block";
-        buktiTransfer.style.display = "block";
+      if(metode === "QR") {
+        qrSection.style.opacity = "1";
+        qrSection.style.maxHeight = "500px";
+        buktiTransfer.style.opacity = "1";
+        buktiTransfer.style.maxHeight = "200px";
       } else {
-        qrSection.style.display = "none";
-        buktiTransfer.style.display = "none";
+        qrSection.style.opacity = "0";
+        qrSection.style.maxHeight = "0";
+        buktiTransfer.style.opacity = "0";
+        buktiTransfer.style.maxHeight = "0";
       }
     }
+// jalankan saat halaman pertama kali dimuat untuk menyesuaikan old('metode')
+    window.addEventListener('DOMContentLoaded', (event) => {
+      toggleQR();
+    });
   </script>
 
 </body>

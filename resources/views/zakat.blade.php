@@ -80,7 +80,7 @@
 
       <div id="qrZakat" class="qr-section" style="display: none; margin-top: 10px;">
         <h4>Scan QR untuk Membayar</h4>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=Zakat+Masjid+Jami" alt="QR Zakat">
+        <img src="{{ asset('asset/Qris.png') }}" alt="QR Code" width="200" height="200">
         <p>Gunakan aplikasi e-wallet Anda</p>
       </div>
 
