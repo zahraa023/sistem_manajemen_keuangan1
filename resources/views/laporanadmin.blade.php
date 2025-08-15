@@ -8,6 +8,10 @@
   <link href="{{ asset('css/datalap.css') }}" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <!-- Tambahkan library jsPDF dan autoTable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
 
@@ -31,6 +35,19 @@
           <option value="tahun" {{ request('filter') === 'tahun' ? 'selected' : '' }}>Tahun Ini</option>
         </select>
       </form>
+
+      <!-- Tombol cetak PDF (hanya muncul sesuai filter) -->
+      <div style="margin: 10px 0;">
+        <button id="btnMinggu" onclick="cetakPDF('minggu')" class="btn-tambah" style="display:none;">
+          <i class="fa fa-file-pdf"></i> Cetak PDF Minggu Ini
+        </button>
+        <button id="btnBulan" onclick="cetakPDF('bulan')" class="btn-tambah" style="display:none;">
+          <i class="fa fa-file-pdf"></i> Cetak PDF Bulan Ini
+        </button>
+        <button id="btnTahun" onclick="cetakPDF('tahun')" class="btn-tambah" style="display:none;">
+          <i class="fa fa-file-pdf"></i> Cetak PDF Tahun Ini
+        </button>
+      </div>
 
       <!-- Tombol tambah -->
       <button class="btn-tambah" onclick="openForm()">+ Tambah Data</button>
@@ -188,11 +205,58 @@
       }
     }
 
+    // --- Menampilkan tombol PDF sesuai filter ---
+    function updatePDFButtons() {
+      const filter = document.getElementById("filter").value;
+      document.getElementById("btnMinggu").style.display = (filter === "minggu") ? "inline-block" : "none";
+      document.getElementById("btnBulan").style.display = (filter === "bulan") ? "inline-block" : "none";
+      document.getElementById("btnTahun").style.display = (filter === "tahun") ? "inline-block" : "none";
+    }
+
     // Jalankan saat halaman dimuat
     updateJudulFilter();
+    updatePDFButtons();
 
     // Update otomatis saat filter berubah
-    document.getElementById("filter").addEventListener("change", updateJudulFilter);
+    document.getElementById("filter").addEventListener("change", function() {
+      updateJudulFilter();
+      updatePDFButtons();
+    });
+
+    // Fungsi cetak PDF
+    function cetakPDF(jenis) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      // Judul PDF
+      let judul = '';
+      if (jenis === 'minggu') judul = 'Laporan Keuangan - Minggu Ini';
+      if (jenis === 'bulan') judul = 'Laporan Keuangan - Bulan Ini';
+      if (jenis === 'tahun') judul = 'Laporan Keuangan - Tahun Ini';
+
+      doc.setFontSize(14);
+      doc.text(judul, 14, 15);
+
+      // Ambil data dari tabel
+      const tableData = [];
+      document.querySelectorAll(".transaction-table tbody tr").forEach(tr => {
+        const row = [];
+        tr.querySelectorAll("td").forEach((td, index) => {
+          if (index < 4) row.push(td.innerText.trim());
+        });
+        tableData.push(row);
+      });
+
+      // Generate tabel PDF
+      doc.autoTable({
+        head: [['#', 'Nama Transaksi', 'Pemasukan', 'Pengeluaran']],
+        body: tableData,
+        startY: 25,
+      });
+
+      // Simpan file PDF
+      doc.save(`${judul}.pdf`);
+    }
   </script>
 
 </body>

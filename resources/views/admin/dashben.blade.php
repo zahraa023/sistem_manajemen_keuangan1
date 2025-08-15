@@ -28,14 +28,16 @@
     <button class="active" onclick="showContent('dashben', event)">Dashboard</button>
      <button onclick="window.location.href='/donatur'">Donatur</button>
      <button onclick="window.location.href='/donatur_zakat'">Donatur Zakat</button>
-    <button onclick="toggleDropdown()">Laporan ⯆</button>
+    <!-- <button onclick="toggleDropdown()">Laporan ⯆</button>
     <div id="dropdownMenu">
       <button onclick="showContent('ringkasankeuangan', event)">Ringkasan Keuangan</button>
       <button onclick="showContent('laporan', event)">Per Minggu</button>
       <button onclick="showContent('perbulan', event)">Per Bulan</button>
       <button onclick="showContent('rincian', event)">Rincian Transaksi</button>
       
-    </div>
+    </div> -->
+     <button onclick="window.location.href='/laporan'">Laporan</button>
+
   </div>
 
   <!-- KONTEN UTAMA -->
@@ -201,17 +203,24 @@ function simpanRincian() {
 
     const main = document.getElementById('mainContent');
 
-    if (page === 'dashben') {
-      main.innerHTML = `
-        <h2>DASHBOARD BENDAHARA</h2>
-        <div style="display:flex; gap:20px; margin-top:20px;">
-          <div class="dashboard-card">
-            <h3><i class="fa fa-hand-holding-heart" style="color:#4CAF50;"></i> Jumlah Donatur</h3>
-            <p>15 Orang</p>
-          </div>
-        </div>
-      `;
-    }
+   if (page === 'dashben') {
+  main.innerHTML = `
+    <div style="text-align: center; padding: 50px; font-family: 'Poppins', sans-serif;">
+      <h1 style="font-size: 42px; font-weight: 800; color: #2c3e50; margin-bottom: 10px;">
+        💼 DASHBOARD BENDAHARA
+      </h1>
+      <p style="font-size: 20px; color: #34495e; margin-bottom: 20px;">
+        Selamat datang di halaman utama Bendahara!
+      </p>
+      <p style="font-size: 18px; color: #7f8c8d; max-width: 700px; margin: 0 auto;">
+        Halaman ini berfungsi untuk memantau perkembangan donatur, pemasukan, dan pengeluaran organisasi.
+        Gunakan menu di samping untuk mengakses laporan per minggu, per bulan, atau rincian transaksi.
+      </p>
+      
+    </div>
+  `;
+}
+
 
     else if (page === 'ringkasankeuangan') {
     main.innerHTML = `

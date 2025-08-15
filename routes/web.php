@@ -16,6 +16,7 @@ use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\LaporanKeuanganController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\LaporanController;
 use App\Models\Transaksi;
 /*
 |--------------------------------------------------------------------------
@@ -129,5 +130,6 @@ Route::post('/transaksi', [TransaksiController::class, 'store'])->name('transaks
 Route::delete('/transaksi/{id}', [TransaksiController::class, 'destroy'])->name('transaksi.destroy');
 Route::put('/transaksi/{id}', [TransaksiController::class, 'update'])->name('transaksi.update');
 
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
 
 

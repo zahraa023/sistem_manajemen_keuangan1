@@ -9,13 +9,10 @@ class LaporanKeuangan extends Model
 {
     use HasFactory;
 
-    protected $table = 'laporan_keuangan';
-
+    protected $table = 'transaksis';
     protected $fillable = [
         'nama_transaksi',
         'pemasukan',
-        'pengeluaran',
-        'bulan',
-        'tahun'
+        'pengeluaran'
     ];
 }
