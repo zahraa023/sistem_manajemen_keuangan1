@@ -56,13 +56,13 @@
         <h2>Register User</h2>
         <form method="POST" action="/registeruser">
           @csrf
-          <label for="newUsername">Username Baru</label>
+          <label for="newUsername">Username </label>
           <input type="text" name="name" placeholder="Username Baru" required />
 
-          <label for="newEmail">Email Baru</label>
+          <label for="newEmail">Email </label>
           <input type="email" name="email" placeholder="Email Baru" required />
 
-          <label for="newPassword">Password Baru</label>
+          <label for="newPassword">Password </label>
           <input type="password" name="password" placeholder="Password Baru" required />
 
           <button type="submit">DAFTAR</button>

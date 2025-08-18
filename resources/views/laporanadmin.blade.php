@@ -111,6 +111,10 @@
     background-color: #f2f2f2;
     font-weight: bold;
   }
+.transaction-table td:nth-child(2),
+.transaction-table th:nth-child(2) {
+  text-align: left;
+}
 
   /* Tombol PDF */
   .pdf-buttons {
@@ -167,10 +171,10 @@
         <label>Nama Transaksi:</label>
         <input type="text" id="formTransaksi" required />
 
-        <label>Pemasukan:</label>
+        <label>Debet:</label>
         <input type="number" id="formPemasukan" />
 
-        <label>Pengeluaran:</label>
+        <label>Kredit:</label>
         <input type="number" id="formPengeluaran" />
 
         <button type="submit" class="btn-save">Simpan</button>
@@ -198,86 +202,101 @@
   </h3>
 
   <!-- Tabel -->
-  <table class="transaction-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Nama Transaksi</th>
-        <th>Pemasukan</th>
-        <th>Pengeluaran</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-     @php
-    $mingguSekarang = null;
-    $bulanSekarang = null;
-    $tahunSekarang = null;
-    $namaBulanList = [
-        1=>'Januari', 2=>'Februari', 3=>'Maret', 4=>'April', 5=>'Mei', 6=>'Juni',
-        7=>'Juli', 8=>'Agustus', 9=>'September', 10=>'Oktober', 11=>'November', 12=>'Desember'
-    ];
-@endphp
-@foreach($transaksis as $index => $t)
-    @php
-        $timestamp = strtotime($t->created_at);
-        $tahun = date('Y', $timestamp);
-        $bulan = date('n', $timestamp);
-        $hari = (int) date('j', $timestamp);
-        $mingguKe = ceil($hari / 7);
-
-        // Untuk Tahun
-        if ($tahunSekarang !== $tahun && request('filter') === 'tahun') {
-            $tahunSekarang = $tahun;
-            echo "<tr>
-                    <td colspan='5' style='background:#ccc;font-weight:bold;text-align:center'>
-                        Tahun {$tahunSekarang}
-                    </td>
-                  </tr>";
-        }
-
-        // Untuk Bulan (baik saat filter bulan atau tahun)
-        if ($bulanSekarang !== $bulan && (request('filter') === 'bulan' || request('filter') === 'tahun')) {
-            $bulanSekarang = $bulan;
-            $namaBulan = $namaBulanList[$bulan];
-            echo "<tr>
-                    <td colspan='5' style='background:#ddd;font-weight:bold;text-align:center'>
-                        {$namaBulan} {$tahun}
-                    </td>
-                  </tr>";
-        }
-
-        // Untuk Minggu
-        if ($mingguSekarang !== $mingguKe && request('filter') === 'minggu') {
-            $mingguSekarang = $mingguKe;
-            $awal = ($mingguKe - 1) * 7 + 1;
-            $akhir = min($awal + 6, cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun));
-            $namaBulan = $namaBulanList[$bulan];
-            echo "<tr>
-                    <td colspan='5' style='background:#eee;font-weight:bold;text-align:center'>
-                        Minggu {$mingguKe} ({$awal}-{$akhir} {$namaBulan} {$tahun})
-                    </td>
-                  </tr>";
-        }
-    @endphp
-    <tr data-id="{{ $t->id }}">
-        <td>{{ $index + 1 }}</td>
-        <td>{{ $t->nama_transaksi }}</td>
-        <td class="amount-green">
-            {{ $t->pemasukan ? 'Rp ' . number_format($t->pemasukan,0,',','.') : '' }}
-        </td>
-        <td class="amount-red">
-            {{ $t->pengeluaran ? 'Rp ' . number_format($t->pengeluaran,0,',','.') : '' }}
-        </td>
-        <td>
-            <button class="btn-edit" onclick="editData({{ $t->id }}, '{{ $t->nama_transaksi }}', '{{ $t->pemasukan }}', '{{ $t->pengeluaran }}')">Edit</button>
-            <button class="btn-delete" onclick="hapusData({{ $t->id }}, this)">Hapus</button>
-        </td>
+<table class="transaction-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nama Transaksi</th>
+      <th>Debet</th>
+      <th>Kredit</th>
+      <th>Aksi</th>
     </tr>
-@endforeach
+  </thead>
+  <tbody>
+    @php
+      $mingguSekarang = null;
+      $bulanSekarang = null;
+      $tahunSekarang = null;
+      $totalDebet = 0;
+      $totalKredit = 0;
+      $namaBulanList = [
+          1=>'Januari', 2=>'Februari', 3=>'Maret', 4=>'April', 5=>'Mei', 6=>'Juni',
+          7=>'Juli', 8=>'Agustus', 9=>'September', 10=>'Oktober', 11=>'November', 12=>'Desember'
+      ];
+    @endphp
+    @foreach($transaksis as $index => $t)
+        @php
+            $timestamp = strtotime($t->created_at);
+            $tahun = date('Y', $timestamp);
+            $bulan = date('n', $timestamp);
+            $hari = (int) date('j', $timestamp);
+            $mingguKe = ceil($hari / 7);
 
-    </tbody>
-  </table>
+            // Hitung total
+            $totalDebet += $t->pemasukan ?? 0;
+            $totalKredit += $t->pengeluaran ?? 0;
+
+            // Untuk Tahun
+            if ($tahunSekarang !== $tahun && request('filter') === 'tahun') {
+                $tahunSekarang = $tahun;
+                echo "<tr>
+                        <td colspan='5' style='background:#ccc;font-weight:bold;text-align:center'>
+                            Tahun {$tahunSekarang}
+                        </td>
+                      </tr>";
+            }
+
+            // Untuk Bulan
+            if ($bulanSekarang !== $bulan && (request('filter') === 'bulan' || request('filter') === 'tahun')) {
+                $bulanSekarang = $bulan;
+                $namaBulan = $namaBulanList[$bulan];
+                echo "<tr>
+                        <td colspan='5' style='background:#ddd;font-weight:bold;text-align:center'>
+                            {$namaBulan} {$tahun}
+                        </td>
+                      </tr>";
+            }
+
+            // Untuk Minggu
+            if ($mingguSekarang !== $mingguKe && request('filter') === 'minggu') {
+                $mingguSekarang = $mingguKe;
+                $awal = ($mingguKe - 1) * 7 + 1;
+                $akhir = min($awal + 6, cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun));
+                $namaBulan = $namaBulanList[$bulan];
+                echo "<tr>
+                        <td colspan='5' style='background:#eee;font-weight:bold;text-align:center'>
+                            Minggu {$mingguKe} ({$awal}-{$akhir} {$namaBulan} {$tahun})
+                        </td>
+                      </tr>";
+            }
+        @endphp
+        <tr data-id="{{ $t->id }}">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ $t->nama_transaksi }}</td>
+            <td class="amount-green">
+                {{ $t->pemasukan ? 'Rp ' . number_format($t->pemasukan,0,',','.') : '' }}
+            </td>
+            <td class="amount-red">
+                {{ $t->pengeluaran ? 'Rp ' . number_format($t->pengeluaran,0,',','.') : '' }}
+            </td>
+            <td>
+                <button class="btn-edit" onclick="editData({{ $t->id }}, '{{ $t->nama_transaksi }}', '{{ $t->pemasukan }}', '{{ $t->pengeluaran }}')">Edit</button>
+                <button class="btn-delete" onclick="hapusData({{ $t->id }}, this)">Hapus</button>
+            </td>
+        </tr>
+    @endforeach
+  </tbody>
+
+  <!-- Tambahkan bagian total -->
+  <tfoot>
+    <tr style="background:#f2f2f2;font-weight:bold;">
+      <td colspan="2">TOTAL</td>
+      <td class="amount-green">Rp {{ number_format($totalDebet, 0, ',', '.') }}</td>
+      <td class="amount-red">Rp {{ number_format($totalKredit, 0, ',', '.') }}</td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
 
   <script>
     const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

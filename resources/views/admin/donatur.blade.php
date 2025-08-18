@@ -1,4 +1,4 @@
-{{-- resources/views/donatur.blade.php --}}
+<!-- {{-- resources/views/donatur.blade.php --}}
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,25 +9,25 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   
 </head>
-<body>
+<body> -->
 
     <!-- Header -->
-    <div class="header">
+    <!-- <div class="header">
         <button class="back-button" onclick="window.location.href='/dashben'">
             <i class="fas fa-arrow-left"></i>
         </button>
         <div class="header-title">Data Donatur</div>
-    </div>
+    </div> -->
 
     <!-- CONTAINER -->
-    <div class="container">
+    <!-- <div class="container"> -->
         
         <!-- SIDEBAR -->
-        <div class="sidebar">
+        <!-- <div class="sidebar">
             <button onclick="window.location.href='/donatur'">Donatur</button>
-        </div>
+        </div> -->
 
-    <div class="content">
+    <!-- <div class="content">
       <h2>Daftar Donatur</h2>
 
       <table id="donaturTable">
@@ -90,10 +90,10 @@
       <td colspan="10">Belum ada donasi</td>
     </tr>
   @endforelse
-</tbody>
+</tbody> -->
 
   <!-- Script -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
@@ -105,15 +105,15 @@
   function hapusBaris(button) {
     if (confirm('Yakin ingin menghapus donatur ini?')) {
       const row = button.closest('tr');
-      row.remove();
+      row.remove(); -->
       // Kirim request DELETE ke server jika perlu
-    }
-  }
+    <!-- }
+  } -->
 
-  function toggleDropdown() {
+  <!-- function toggleDropdown() {
     const dropdown = document.getElementById('dropdownMenu');
     dropdown.style.display = dropdown.style.display === 'none' ? 'flex' : 'none';
   }
 </script>
 </body>
-</html>
+</html> -->
