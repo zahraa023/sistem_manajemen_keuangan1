@@ -1,76 +1,121 @@
-{{-- resources/views/donaturzakat.blade.php --}}
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Data Donatur</title>
-  <link href="{{ asset('css/dash.css') }}" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Donatur Zakat</title>
+    <link href="{{ asset('css/donzak.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-      <h2>Daftar Zakat</h2>
+<div class="header">
+    <button class="back-button" onclick="window.location.href='/dashben'">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+    <div class="header-title">Data Donatur</div>
+</div>
 
-      <table id="donaturTable">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Muzakki</th>
+<div class="container">
+    <div class="sidebar">
+        <button onclick="window.location.href='/donatur_zakat'">Donatur Zakat</button>
+    </div>
+
+    <div class="content">
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+
+      <table>
+    <thead>
+        <tr>
+            <th>Donatur</th>
             <th>Tanggal</th>
+            <th>Jenis Zakat</th>
             <th>Jumlah</th>
             <th>Metode</th>
             <th>Bukti</th>
             <th>Status</th>
-            <th>Created At</th>
-            <th>Updated At</th>
             <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          @forelse ($donatur as $index => $d)
-            <tr>
-              <td>{{ $index + 1 }}</td>
-              <td>{{ $d->nama }}</td>
-              <td>{{ $d->tanggal }}</td>
-              <td>Rp{{ number_format($d->jumlah, 0, ',', '.') }}</td>
-              <td>{{ $d->metode }}</td>
-              <td>
-                @if($d->bukti)
-                  <a href="{{ asset('storage/' . $d->bukti) }}" target="_blank">
-                    <img src="{{ asset('storage/' . $d->bukti) }}" alt="Bukti Zakat" style="width: 80px; border-radius: 4px;">
-                  </a>
-                @else
-                  <em>Tidak Ada</em>
-                @endif
-              </td>
-              <td>{{ ucfirst($d->status) }}</td>
-              <td>{{ $d->created_at }}</td>
-              <td>{{ $d->updated_at }}</td>
-              <td>
-                @if ($d->status === 'pending')
-                  <form action="{{ route('donaturzakat.approve', $d->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit" class="btn-approve">✔️ Approve</button>
-                  </form>
-                @endif
+        </tr>
+    </thead>
+    <tbody>
+        @php $totalSaldo = 0; @endphp
 
-                <form action="{{ route('donaturzakat.destroy', $d->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Yakin ingin menghapus data zakat ini?');">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn-delete">🗑️ Hapus</button>
-                </form>
-              </td>
-            </tr>
-          @empty
+        @forelse($donaturs as $donatur)
+            @php
+                if($donatur->status === 'selesai'){
+                    $totalSaldo += $donatur->jumlah;
+                }
+            @endphp
             <tr>
-              <td colspan="10">Belum ada data zakat.</td>
+                <td>{{ $donatur->nama }}</td>
+                <td>{{ \Carbon\Carbon::parse($donatur->tanggal)->format('d/m/Y') }}</td>
+                <td>{{ $donatur->jenisZakat->nama ?? '-' }}</td>
+                <td>Rp {{ number_format($donatur->jumlah, 0, ',', '.') }}</td>
+                <td>{{ $donatur->metode }}</td>
+                <td>
+                    @if($donatur->bukti)
+                        <a href="{{ asset('storage/' . $donatur->bukti) }}" target="_blank">
+                            <img src="{{ asset('storage/' . $donatur->bukti) }}" alt="Bukti" width="80" style="cursor: pointer;" />
+                        </a>
+                    @else
+                        <span class="text-muted">Tidak ada</span>
+                    @endif
+                </td>
+                <td>
+                    @if($donatur->status == 'pending')
+                        <span class="badge">Pending</span>
+                    @elseif($donatur->status == 'selesai')
+                        <span class="badge">Selesai</span>
+                    @elseif($donatur->status == 'ditolak')
+                        <span class="badge">Ditolak</span>
+                    @endif
+                </td>
+                <td>
+                    @if($donatur->status == 'pending')
+                        {{-- Approve --}}
+                        <form action="{{ route('donatur_zakat.approve', $donatur->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-tambah">Approve</button>
+                        </form>
+
+                        {{-- Tolak --}}
+                        <form action="{{ route('donatur_zakat.reject', $donatur->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn btn-tambah" style="background:#e74c3c; color:#fff;">Tolak</button>
+                        </form>
+                    @endif
+
+                    {{-- Hapus --}}
+                    <form action="{{ route('donatur_zakat.destroy', $donatur->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="hapus-btn" onclick="return confirm('Yakin ingin hapus?')">Hapus</button>
+                    </form>
+                </td>
             </tr>
-          @endforelse
-        </tbody>
-      </table>
+        @empty
+            <tr>
+                <td colspan="10" class="text-center text-muted">Belum ada data donatur zakat</td>
+            </tr>
+        @endforelse
+    </tbody>
+
+    {{-- Tambahkan total saldo di bawah tabel --}}
+    <tfoot>
+        <tr>
+            <td colspan="7" style="text-align:right; font-weight:bold;">Total Saldo:</td>
+            <td style="font-weight:bold;">
+                Rp {{ number_format($totalSaldo, 0, ',', '.') }}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
     </div>
-  </div>
+</div>
 </body>
 </html>

@@ -7,14 +7,14 @@ use App\Models\Donasi;
 class DonasiController extends Controller
 {
     public function index()
-{
-    // Ambil hanya donasi yang sudah diapprove
-    $donasis = Donasi::where('status', 'selesai')
-        ->orderBy('created_at', 'desc')
-        ->get();
+    {
+        // Ambil semua donasi dengan status selesai atau tolak
+        $donasis = Donasi::whereIn('status', ['selesai', 'tolak'])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    return view('donasi', compact('donasis'));
-}
+        return view('donasi', compact('donasis'));
+    }
 
     public function create()
     {

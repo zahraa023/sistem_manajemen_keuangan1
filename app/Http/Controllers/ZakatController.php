@@ -12,7 +12,7 @@ class ZakatController extends Controller
     {
         $jenisZakats = JenisZakat::all();
         $donaturs = DonaturZakat::with('jenisZakat')
-            ->where('status', 'selesai')
+            ->whereIn('status', ['selesai', 'ditolak']) // ✅ tampilkan selesai & ditolak
             ->get();
 
         return view('zakat', compact('jenisZakats', 'donaturs'));
@@ -35,6 +35,7 @@ class ZakatController extends Controller
         $donatur->jumlah = $request->jumlah;
         $donatur->jenis_zakat_id = $request->jenis_zakat_id;
         $donatur->metode = $request->metode;
+        $donatur->status = 'pending'; // ✅ default pending
 
         if ($request->hasFile('bukti')) {
             $path = $request->file('bukti')->store('bukti_zakat', 'public');

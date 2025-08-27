@@ -26,16 +26,9 @@
   <!-- SIDEBAR -->
   <div class="sidebar">
     <button class="active" onclick="showContent('dashben', event)">Dashboard</button>
-     <button onclick="window.location.href='/donatur'">Donatur</button>
+     <button onclick="window.location.href='/donatur'">Donatur Donasi</button>
      <button onclick="window.location.href='/donatur_zakat'">Donatur Zakat</button>
-    <!-- <button onclick="toggleDropdown()">Laporan ⯆</button>
-    <div id="dropdownMenu">
-      <button onclick="showContent('ringkasankeuangan', event)">Ringkasan Keuangan</button>
-      <button onclick="showContent('laporan', event)">Per Minggu</button>
-      <button onclick="showContent('perbulan', event)">Per Bulan</button>
-      <button onclick="showContent('rincian', event)">Rincian Transaksi</button>
-      
-    </div> -->
+
      <button onclick="window.location.href='/laporanadmin'">Kelola Laporan</button>
 
   </div>
@@ -213,8 +206,8 @@ function simpanRincian() {
         Selamat datang di halaman utama Bendahara!
       </p>
       <p style="font-size: 18px; color: #7f8c8d; max-width: 700px; margin: 0 auto;">
-        Halaman ini berfungsi untuk memantau perkembangan donatur, pemasukan, dan pengeluaran organisasi.
-        Gunakan menu di samping untuk mengakses laporan per minggu, per bulan, atau rincian transaksi.
+        Halaman ini berfungsi untuk memantau perkembangan donatur, pemasukan, dan pengeluaran.
+        Gunakan menu di samping untuk mengakses Donatur Donasi, Donatur Zakat dan Kelola Laporan.
       </p>
       
     </div>
